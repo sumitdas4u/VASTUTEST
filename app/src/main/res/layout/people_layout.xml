@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingRight="15dp">
+<RelativeLayout android:layout_width="120dp"
+    android:layout_height="120dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+       />
+
+
+    <TextView
+        android:id="@+id/nearPplDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_corner_drak_grey"
+
+        android:text="14Km"
+        android:textColor="@color/abc_primary_text_material_dark"
+        android:textSize="11sp"
+        android:layout_alignTop="@+id/userage"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/userage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="8dp"
+
+        android:background="@drawable/rounded_corner_blue"
+        android:text="21"
+        android:textColor="@color/abc_primary_text_material_dark"
+        android:textSize="11sp" />
+
+</RelativeLayout>
+
+    <TextView
+        android:id="@+id/nearPplName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="Ipsita Saha DasIpsita Saha Das"
+        android:textColor="@color/abc_primary_text_disable_only_material_light"
+        android:textSize="13sp"
+        android:layout_alignBottom="@+id/imageView2"
+        android:singleLine="false"
+        android:maxLength="16"
+        android:layout_marginTop="8dp" />
+</LinearLayout>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/com_facebook_blue"
+    android:padding="10dp">
+
+    <Button
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:text="Yes"
+        android:id="@+id/fbCheckIn"
+        android:layout_gravity="right"
+        android:layout_alignTop="@+id/fbNoCheckIn"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="@color/cpb_grey"
+        android:textSize="12sp" />
+    <Button
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:text="No"
+        android:id="@+id/fbNoCheckIn"
+        android:layout_gravity="right"
+        android:background="@color/cpb_grey"
+        android:textSize="12sp"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/fbCheckIn"
+        android:layout_toStartOf="@+id/fbCheckIn"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_facebook_box" />
+</RelativeLayout>

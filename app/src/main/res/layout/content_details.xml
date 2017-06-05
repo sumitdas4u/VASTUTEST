@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.utsavmobileapp.utsavapp.DetailsActivity"
+    tools:showIn="@layout/activity_details">
+
+    <android.support.v4.widget.NestedScrollView
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_margin="@dimen/text_margin"-->
+        <!--android:text="@string/large_text" />-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/background_light"
+                android:paddingBottom="10dp">
+                <TextView
+                    android:id="@+id/detailsDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="10dp" />
+                <LinearLayout
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dip"
+
+
+                    android:background="@color/button_material_light"
+                    android:gravity="clip_vertical"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/detailStat"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="5dp"
+                    android:textColor="@color/__picker_text_80" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/detailsContactPerson"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/__picker_text_40"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/detailsContactNum"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@android:color/holo_green_dark"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Rate &amp; Review"
+                    android:textColor="@color/uber_white"
+                    android:id="@+id/btnrate"
+                    android:background="@drawable/rounded_corner_green"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginRight="60dp"
+                    android:layout_marginTop="5dp" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="50dp"
+                    android:paddingRight="50dp">
+                    <com.dd.CircularProgressButton
+                        android:id="@+id/checkIn"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_margin="10dp"
+
+                        style="?android:attr/borderlessButtonStyle"
+                        app:cpb_iconError="@drawable/bs_ic_clear"
+                        app:cpb_iconComplete="@drawable/com_facebook_button_like_icon_selected"
+                        app:cpb_textIdle="Check In"
+                        android:layout_weight="1"
+                        android:textSize="12sp"
+                        app:cpb_cornerRadius="2dp"
+                        android:textColor="@color/H1TextColor"
+                        app:cpb_selectorIdle="@drawable/idle_state_selector"
+                        />
+
+
+                    <ToggleButton
+                        style="?android:attr/borderlessButtonStyle"
+                        android:id="@+id/detailsBMToggle"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/toggle_button_grey_red"
+                        android:textColor="@color/H1TextColor"
+                        android:textOff="BookMark"
+                        android:textOn="BookMarked"
+                        android:layout_weight="1"
+                        android:textSize="12sp" />
+
+  </LinearLayout>
+
+                <ToggleButton
+                    android:id="@+id/storyInfoToggle"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/button_line_"
+                    android:textColor="@color/H1TextColor"
+                    android:textOn="Photos / Directions"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:textOff="Storyboard"
+                    />
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/detailsProgress"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal" />
+
+            <LinearLayout
+                android:id="@+id/detailsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/detailsMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_filter_list_white_24dp" />
+</RelativeLayout>

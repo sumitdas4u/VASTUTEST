@@ -1,0 +1,339 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:uber="http://schemas.android.com/apk/res-auto"
+    tools:context="com.utsavmobileapp.utsavapp.fragment.FestivalDetailsInfoFragment"
+    android:orientation="vertical"
+    android:id="@+id/linearFestivalInfo"
+    android:paddingTop="10dp">
+
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Get a bus in a day or two"-->
+        <!--android:id="@+id/detailsTravelMode" />-->
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/background_light"
+        android:padding="10dp"
+        android:id="@+id/lAddress">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="5dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/secondary_text_light"
+                    android:textSize="16sp"
+                    android:text="Address" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/secondary_text_light"
+                    android:textSize="13sp"
+                    android:id="@+id/detailsAddress"
+                    android:paddingBottom="3dp" />
+                <TextView
+                    android:id="@+id/detailsAway"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/secondary_text_light"
+                    android:textSize="12sp"/>
+
+               <com.uber.sdk.android.rides.RideRequestButton
+                    android:id="@+id/uberBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    uber:ub__style="white"
+                   android:visibility="gone" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/imageFestival"
+                android:layout_gravity="right"
+                android:src="@android:drawable/ic_dialog_map" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+           android:text="Maps &amp; Directions > "
+            android:textSize="13dp"
+            android:textColor="@color/colorPrimary"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="right"
+            android:paddingTop="5dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/background_light"
+        android:padding="10dp"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/secondary_text_light"
+            android:textSize="16dp"
+            android:text="Photos"
+            android:paddingBottom="8dp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add a Photo"
+            android:textColor="@color/uber_white"
+            android:id="@+id/addPic"
+            android:background="@drawable/rounded_corner_green"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp" />
+
+        <TextView
+            android:id="@+id/detailsViewAllPhotos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="View All Photos "
+            android:textSize="13dp"
+            android:textColor="@color/colorPrimary"
+            android:layout_gravity="right"
+            android:paddingTop="5dp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/background_light"
+        android:padding="10dp"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/secondary_text_light"
+            android:textSize="16dp"
+            android:text="Reviews"
+            android:paddingBottom="8dp" />
+
+        <LinearLayout
+            android:id="@+id/card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+
+            android:scrollbars="none">
+
+            <!--<include layout="@layout/block_card_layout"/>-->
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Write a Review"
+            android:textColor="@color/uber_white"
+            android:id="@+id/writeReview"
+            android:background="@drawable/rounded_corner_green"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="View All Reviews "
+            android:textSize="13dp"
+            android:textColor="@color/colorPrimary"
+            android:id="@+id/detailsViewAllReviews"
+            android:layout_gravity="right"
+            android:paddingTop="5dp" />
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:background="@color/background_material_light"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Near Festivals"
+            android:textColor="@android:color/secondary_text_light"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/detailsViewAllFestival"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center_horizontal"
+            android:background="@android:color/transparent"
+            android:text="View All"
+            android:textColor="@color/H1TextColor"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <HorizontalScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/nearContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp">
+
+            <!--<include layout="@layout/festival_block"/>-->
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:background="@color/background_material_light"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Restaurants Nearby"
+            android:textColor="@android:color/secondary_text_light"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/zomato5"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+
+
+    </RelativeLayout>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/nearFestivalProgress"
+        android:layout_gravity="center_horizontal" />
+
+    <HorizontalScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/nearRestaurantContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp">
+
+            <!--<include layout="@layout/festival_block"/>-->
+
+        </LinearLayout>
+    </HorizontalScrollView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="3dp">
+
+        <TextView
+
+            android:layout_width="fill_parent"
+
+            android:layout_height="wrap_content"
+            android:text="Emergency"
+            android:textColor="@android:color/secondary_text_light"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/linearLayoutSponsored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:orientation="horizontal">
+
+            <ProgressBar
+                android:id="@+id/sponsoredProgress"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true" />
+            <!--<include layout="@layout/festival_block"/>-->
+
+        </LinearLayout>
+    </HorizontalScrollView>
+</LinearLayout>
