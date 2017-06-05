@@ -1,0 +1,71 @@
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/background_light"
+        android:layout_margin="5dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/linearLayout">
+
+            <TextView
+                android:id="@+id/txtTitle"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="8dp"
+                android:maxLength="31"
+                android:text="Bangur Avenue Protironi"
+                android:textColor="@color/primary_text_default_material_light"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/txtAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/imageFestival"
+
+                android:layout_marginLeft="10dp"
+                android:text="China, SectorSectoSector"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/txtPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/imageFestival"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+
+                android:text="033-255810"
+                android:textColor="@color/cpb_green_dark"
+                android:textSize="12sp"
+                android:autoLink="phone" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txtDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corner_drak_grey"
+            android:padding="5dp"
+            android:text="14Km"
+            android:textColor="@color/abc_primary_text_material_dark"
+            android:textSize="11sp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/linearLayout"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+    </RelativeLayout>
+</LinearLayout>

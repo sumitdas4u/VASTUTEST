@@ -1,0 +1,59 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:uber="http://schemas.android.com/apk/res-auto">
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/map"
+    android:name="com.google.android.gms.maps.SupportMapFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.utsavmobileapp.utsavapp.MapsActivity" />
+
+
+    <com.uber.sdk.android.rides.RideRequestButton
+        android:id="@+id/mapUbr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        uber:ub__style="white"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:gravity="left|center_vertical"
+
+        android:visibility="gone" />
+    <ToggleButton
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOn="Show Road Blockage"
+        android:textOff="Hide Road Blockage"
+        android:id="@+id/btnBlock"
+        android:layout_alignParentTop="true"
+
+        android:layout_margin="10dp"
+        android:background="@color/__picker_item_photo_border_selected"
+        android:checked="false"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text=""
+        android:drawableLeft= "@drawable/ic_pin_drop_black_18dp"
+        android:drawablePadding="10dp"
+        android:paddingLeft="10dp"
+        android:id="@+id/directionBtn"
+        android:gravity="left|center_vertical"
+        android:background="@color/uber_white"
+        style="?android:attr/borderlessButtonStyle"
+        android:onClick="showDirection"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp" />
+
+</RelativeLayout>

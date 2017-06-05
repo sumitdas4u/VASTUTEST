@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:hedgehog="http://schemas.android.com/apk/res-auto">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="60dp">
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="150dp"
+                android:id="@+id/reviewBody"
+                android:hint="Report things that were lost,stolen or found."
+                android:background="@android:color/background_light"
+                android:gravity="top"
+                android:inputType=""
+                android:textSize="13sp"
+                android:padding="10dp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/picked_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none" />
+
+        </LinearLayout>
+    </FrameLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="ADD PHOTOS"
+            android:textSize="10sp"
+            android:id="@+id/plus"
+            android:background="@color/abc_search_url_text_normal"
+            android:textColor="@color/uber_white" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:layout_margin="8dp"
+            android:textSize="10sp"
+            android:text="Publish"
+            android:id="@+id/submit"
+            android:background="@color/colorAccent"
+            android:textColor="@color/uber_white" />
+    </LinearLayout>
+
+</LinearLayout>

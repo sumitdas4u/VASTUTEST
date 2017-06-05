@@ -1,0 +1,75 @@
+{
+  "project_info": {
+    "project_number": "693340001832",
+    "firebase_url": "https://utsavapp-ec2de.firebaseio.com",
+    "project_id": "utsavapp-ec2de",
+    "storage_bucket": "utsavapp-ec2de.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:693340001832:android:85bf40e6d29b0ef3",
+        "android_client_info": {
+          "package_name": "com.utsavmobileapp.utsavapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "693340001832-1sm2fi34bhathlahj5dn4fgp2c79vf79.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.utsavmobileapp.utsavapp",
+            "certificate_hash": "b60f1e3fb311c2fdac673e6c2a019515a064556f"
+          }
+        },
+        {
+          "client_id": "693340001832-9j238nhp7qg0hdlr8gj2feeb91j4b149.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.utsavmobileapp.utsavapp",
+            "certificate_hash": "354baeaf7103d4df802e7dbf2b27da424bb4c7c5"
+          }
+        },
+        {
+          "client_id": "693340001832-ehn1c059th9re2s80mkoao13bloskuf0.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "693340001832-45qs4qstj8alikc227mbldtia47i556h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.utsavmobileapp.utsavapp",
+            "certificate_hash": "b90ba5b2f45ffb1d192972f6a4908100cc5fb651"
+          }
+        },
+        {
+          "client_id": "693340001832-3dhanj7sukcfmqan9v5un4fvdik8vnjp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAANMViTb6A5bIQwkKQnG6h-tU58i-z_Cg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "693340001832-ehn1c059th9re2s80mkoao13bloskuf0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

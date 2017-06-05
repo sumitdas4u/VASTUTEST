@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@android:color/background_light"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/srchImg"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/srchAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="China, SectorSectoSectorrv Sector 5Sector 5 Sector 5 Sector 5 Sector 5 Sector 5 Sector 5"
+            android:maxLength="45"
+            android:textColor="@color/common_google_signin_btn_text_light_focused"
+            android:textSize="10sp"
+            android:layout_below="@+id/srchSuggestion"
+            android:layout_alignLeft="@+id/srchSuggestion"
+            android:layout_alignStart="@+id/srchSuggestion"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:id="@+id/srchSuggestion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Bangur Avenue ProtironiProtironiProtironi"
+            android:textColor="@color/primary_text_default_material_light"
+            android:textSize="13sp"
+            android:maxLength="35"
+            android:layout_marginStart="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="11dp" />
+
+        <TextView
+            android:id="@+id/srchDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corner_drak_grey"
+            android:padding="5dp"
+            android:text="14Km"
+            android:textColor="@color/abc_primary_text_material_dark"
+            android:textSize="11sp"
+            android:layout_alignTop="@+id/srchRating"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="11dp"
+            android:layout_marginEnd="11dp"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:id="@+id/srchRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corner_green"
+            android:text="2.3"
+            android:textColor="@color/abc_primary_text_material_dark"
+            android:textSize="11sp"
+            android:padding="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_alignBottom="@+id/srchAddress"
+            android:layout_toLeftOf="@+id/srchDistance"
+            android:layout_toStartOf="@+id/srchDistance"
+            android:visibility="invisible"/>
+    </RelativeLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:background="@android:color/background_light"
+        android:layout_gravity="bottom">
+
+    </LinearLayout>
+</LinearLayout>

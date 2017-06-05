@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout android:orientation="vertical"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:hedgehog="http://schemas.android.com/apk/res-auto">
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dip"
+    android:layout_weight="1">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="60dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@color/com_facebook_button_login_silver_background_color">
+
+            <TextView
+                android:text="RATE AND REVIEW"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="14sp"
+                android:layout_gravity="center" />
+
+            <com.hedgehog.ratingbar.RatingBar
+                android:id="@+id/ratingbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                hedgehog:clickable="true"
+                hedgehog:starCount="5"
+                hedgehog:starImageHeight="40dp"
+                hedgehog:starImageWidth="40dp"
+                hedgehog:starEmpty="@mipmap/star_empty"
+                hedgehog:starFill="@mipmap/star_full"
+                hedgehog:starHalf="@mipmap/star_half"
+
+
+                />
+        </LinearLayout>
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="150dp"
+            android:id="@+id/reviewBody"
+            android:hint="Please write at least few characters about your personal experience."
+            android:background="@android:color/background_light"
+            android:gravity="top"
+            android:inputType=""
+            android:textSize="13sp"
+            android:padding="10dp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/picked_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none" />
+
+    </LinearLayout>
+</FrameLayout>
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom">
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="ADD PHOTOS"
+        android:textSize="10sp"
+        android:id="@+id/plus"
+        android:background="@color/abc_search_url_text_normal"
+        android:textColor="@color/uber_white" />
+
+    <CheckBox
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:text="Share on  "
+        android:drawableRight="@drawable/com_facebook_button_icon"
+        android:paddingRight="10dp"
+        android:layout_margin="8dp"
+        android:id="@+id/fbShare"
+        android:layout_weight="1"
+        android:textSize="10sp"
+        android:background="@color/fb_color"
+        android:textColor="@color/uber_white" />
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="50dp"
+        android:layout_margin="8dp"
+        android:textSize="10sp"
+        android:text="Publish"
+        android:id="@+id/submit"
+        android:background="@color/colorAccent"
+        android:textColor="@color/uber_white" />
+</LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/white"
+    android:layout_marginBottom="12dp"
+
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:layout_marginBottom="11dp"
+        android:background="@color/button_material_light"
+        android:gravity="clip_vertical"
+        android:orientation="horizontal" />
+
+    <LinearLayout
+        style="@style/Divider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@android:color/white">
+
+        <ImageView
+            android:id="@+id/storyBoardUserImageView"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="11dp"
+            android:background="@drawable/profile1"
+            android:scaleType="fitXY" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/userNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ipsita Saha Das"
+                android:textColor="@color/abc_input_method_navigation_guard" />
+
+            <TextView
+                android:id="@+id/userFollowReviewTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="China, Sector 5" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/agoTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="1 Minnute ago"
+            android:textSize="13sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/ratedLbl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="7dp"
+                android:layout_toLeftOf="@+id/ratedTextView"
+                android:layout_toStartOf="@+id/ratedTextView"
+                android:text="Rated" />
+
+            <TextView
+                android:id="@+id/ratedTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/rounded_corner_green"
+                android:text="2.3"
+                android:textColor="#fff"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/usrCommentText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="7dp"
+        android:lineSpacingExtra="2dp"
+        android:text="We ordered a Chicken thali to start with. It had Pulao, two vegetable dishes, chicken curry (3/4 pieces) and a gulab jamun - all for Rs.90 only. Whats Hot: Quality of spices is much better than most restaurants, adequate quantity for one person, nice packaging to seal the flavors, reasonable price, free delivery to your office, accepts Edenred/Sodexo meal vouchers."
+        android:textColor="@color/background_floating_material_dark" />
+
+
+</LinearLayout>

@@ -1,0 +1,6 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/bottom_rate" android:title="Rate Festival" android:icon="@drawable/ic_star_rate_black_18dp"/>
+    <item android:id="@+id/bottom_photo" android:title="Upload Photo" android:icon="@drawable/ic_add_a_photo_black_18dp"/>
+    <item android:id="@+id/bottom_review" android:title="Write Review" android:icon="@drawable/ic_present_to_all_black_18dp"/>
+        <item android:id="@+id/bottom_checkin" android:title="Check In" android:icon="@drawable/ic_add_location_black_18dp"/>
+</menu>
