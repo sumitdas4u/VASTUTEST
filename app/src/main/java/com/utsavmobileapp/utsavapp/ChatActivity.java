@@ -1,12 +1,16 @@
 package com.utsavmobileapp.utsavapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +20,7 @@ import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -109,6 +114,7 @@ public class ChatActivity extends AppCompatActivity implements GoogleApiClient.O
     ChatCachingAPI cca;
     Common common;
     String receivedNode = "";
+    private boolean iBlocked = false, meBlocked = false;
     private ActionBar actionBar;
 
     @Override
@@ -122,7 +128,7 @@ public class ChatActivity extends AppCompatActivity implements GoogleApiClient.O
         set = new SettingsAPI(this);
         lcp = new LoginCachingAPI(this);
         common = new Common(this);
-        cca=new ChatCachingAPI(this);
+        cca = new ChatCachingAPI(this);
 
         if (getIntent().getStringExtra("chat_node") != null)
             receivedNode = getIntent().getStringExtra("chat_node");
@@ -161,6 +167,49 @@ public class ChatActivity extends AppCompatActivity implements GoogleApiClient.O
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_chat_details, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_info:
+                if(iBlocked)
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
+                    builder.setMessage("Do you want to unblock this shariff insaan?")
+                            .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    mFirebaseDatabaseReference.child(MESSAGES_CHILD + "/" + chatNode+"/blocked").removeValue();
+                                    iBlocked=false;
+                                }
+                            })
+                            .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // User cancelled the dialog
+                                }
+                            });
+                    // Create the AlertDialog object and return it
+                    builder.create().show();
+                }
+                else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
+                    builder.setMessage("Do you want to block this romeo?")
+                            .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    mFirebaseDatabaseReference.child(MESSAGES_CHILD + "/" + chatNode + "/blocked").push().setValue(mUserId);
+                                }
+                            })
+                            .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // User cancelled the dialog
+                                }
+                            });
+                    // Create the AlertDialog object and return it
+                    builder.create().show();
+                }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -219,6 +268,15 @@ public class ChatActivity extends AppCompatActivity implements GoogleApiClient.O
                     protected ChatMessage parseSnapshot(DataSnapshot snapshot) {
                         ChatMessage friendlyMessage = super.parseSnapshot(snapshot);
                         if (friendlyMessage != null) {
+                            if (snapshot.getKey().equals("blocked")) {
+                                if (mUserId.equals(snapshot.getValue().toString().split("=")[1].replace("}", "").trim())) {
+                                    iBlocked = true;
+                                    friendlyMessage.setText("You have blocked this person");
+                                } else if (mGirlFriend.equals(snapshot.getValue().toString().split("=")[1].replace("}", "").trim())) {
+                                    meBlocked = true;
+                                    friendlyMessage.setText("This person has blocked you");
+                                }
+                            }
                             friendlyMessage.setId(snapshot.getKey());
                         }
                         return friendlyMessage;
@@ -226,24 +284,25 @@ public class ChatActivity extends AppCompatActivity implements GoogleApiClient.O
 
                     @Override
                     protected void populateViewHolder(MessageViewHolder viewHolder, ChatMessage friendlyMessage, int position) {
-                        mProgressBar.setVisibility(ProgressBar.INVISIBLE);
+                        mProgressBar.setVisibility(ProgressBar.GONE);
                         viewHolder.messageTextView.setText(friendlyMessage.getText());
-                        viewHolder.messengerTextView.setText(friendlyMessage.getName());
-                        if (friendlyMessage.getPhotoUrl() == null) {
-                            viewHolder.messengerImageView.setImageDrawable(ContextCompat.getDrawable(ChatActivity.this,
-                                    R.drawable.com_facebook_profile_picture_blank_square));
-                        } else {
-                            Glide.with(ChatActivity.this)
-                                    .load(friendlyMessage.getPhotoUrl())
-                                    .into(viewHolder.messengerImageView);
+                        if (!friendlyMessage.getId().equals("blocked")) {
+                            viewHolder.messengerTextView.setText(friendlyMessage.getName());
+                            if (friendlyMessage.getPhotoUrl() == null) {
+                                viewHolder.messengerImageView.setImageDrawable(ContextCompat.getDrawable(ChatActivity.this,
+                                        R.drawable.com_facebook_profile_picture_blank_square));
+                            } else {
+                                Glide.with(ChatActivity.this)
+                                        .load(friendlyMessage.getPhotoUrl())
+                                        .into(viewHolder.messengerImageView);
+                            }
+
+                            // write this message to the on-device index
+                            FirebaseAppIndex.getInstance().update(getMessageIndexable(friendlyMessage));
+
+                            // log a view action on it
+                            FirebaseAppIndex.getInstance().update(getMessageIndexable(friendlyMessage));
                         }
-
-                        // write this message to the on-device index
-                        FirebaseAppIndex.getInstance().update(getMessageIndexable(friendlyMessage));
-
-                        // log a view action on it
-                        FirebaseAppIndex.getInstance().update(getMessageIndexable(friendlyMessage));
-
                     }
                 };
 
@@ -323,24 +382,44 @@ public class ChatActivity extends AppCompatActivity implements GoogleApiClient.O
         mSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String msgBody = mMessageEditText.getText().toString();
-                ChatMessage friendlyMessage = new ChatMessage(mMessageEditText.getText().toString(), mUsername, mPhotoUrl, mUserId);
+                if (iBlocked) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
+                    builder.setMessage("You blocked this person, do you want to unblock?")
+                            .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    mFirebaseDatabaseReference.child(MESSAGES_CHILD + "/" + chatNode+"/blocked").removeValue();
+                                    iBlocked=false;
+                                }
+                            })
+                            .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // User cancelled the dialog
+                                }
+                            });
+                    // Create the AlertDialog object and return it
+                    builder.create().show();
+                } else if (meBlocked) {
+                    Snackbar.make(view, "This person has blocked you", Snackbar.LENGTH_LONG).show();
+                } else {
+                            final String msgBody = mMessageEditText.getText().toString();
+                            final ChatMessage friendlyMessage = new ChatMessage(mMessageEditText.getText().toString(), mUsername, mPhotoUrl, mUserId);
 //                Log.e(TAG, "sending to "+MESSAGES_CHILD+"/"+chatNode);
-                mFirebaseDatabaseReference.child(MESSAGES_CHILD + "/" + chatNode).push().setValue(friendlyMessage);
-                mMessageEditText.setText("");
-                mFirebaseAnalytics.logEvent(MESSAGE_SENT_EVENT, null);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            String urlstr = getString(R.string.uniurl) + "/api/user.php?type=SEND&user_id=" + mGirlFriend + "&msg=" + URLEncoder.encode(msgBody, "UTF-8") + "&title=" + URLEncoder.encode(mUsername, "UTF-8") + "&chat_node=" + chatNode;
+                            mMessageEditText.setText("");
+                            mFirebaseAnalytics.logEvent(MESSAGE_SENT_EVENT, null);
+                    AsyncTask.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            mFirebaseDatabaseReference.child(MESSAGES_CHILD + "/" + chatNode).push().setValue(friendlyMessage);
+                            try {
+                                String urlstr = getString(R.string.uniurl) + "/api/user.php?type=SEND&user_id=" + mGirlFriend + "&msg=" + URLEncoder.encode(msgBody, "UTF-8") + "&title=" + URLEncoder.encode(mUsername, "UTF-8") + "&chat_node=" + chatNode;
 //                            Log.e(TAG, urlstr);
-                            String sb = Common.HttpURLConnection(urlstr);
+                                String sb = Common.HttpURLConnection(urlstr);
 //                            Log.e(TAG, "onClick: " + sb);
-                        } catch (IOException ignored) {
+                            } catch (IOException ignored) {
+                            }
                         }
-                    }
-                }).start();
+                    });
+                }
             }
         });
     }

@@ -42,6 +42,7 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.FirebaseDatabase;
 import com.utsavmobileapp.utsavapp.service.Common;
 import com.utsavmobileapp.utsavapp.service.LatLonCachingAPI;
@@ -96,7 +97,10 @@ public class SplashActivity extends AppCompatActivity implements
 
         llc = new LatLonCachingAPI(this);
         common = new Common(this);
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        try {
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        }
+        catch (DatabaseException ignored){}
 
         new Handler().postDelayed(new Runnable() {
             @Override
