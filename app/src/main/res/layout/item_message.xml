@@ -13,8 +13,7 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:id="@+id/messengerImageView"
-            android:src="@drawable/com_facebook_profile_picture_blank_square"/>
+            android:id="@+id/messengerImageView"/>
 
         <LinearLayout
             android:orientation="vertical"
