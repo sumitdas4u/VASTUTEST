@@ -99,8 +99,6 @@ public class StoryFragment extends Fragment implements AsyncResponseStoryBoard {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
 
     }
@@ -157,7 +155,7 @@ public class StoryFragment extends Fragment implements AsyncResponseStoryBoard {
         FetchStoryBoard fstb = new FetchStoryBoard(mContext, card, llc.readLat(), llc.readLng(), storyPage, storyLimit, storyProg, fId, uId);
 
         fstb.delegateAsyncStoryBoard = this;
-        fstb.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+        fstb.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
         if(parent.getChildCount()<4) {
             parent.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
