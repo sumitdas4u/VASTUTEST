@@ -352,6 +352,7 @@ public class StorySlideshowFragment extends DialogFragment {
                                   public void run() {
                                       //    Log.e("important","story size "+storyId);
                                       // Log.e("important","image "+images.size());
+                                      if(storyId>0)
                                       for (int i = 0; i < images.size(); i++) {
                                           stories.get(storyId).getOtherImgIsLiked().set(i, images.get(i).getLiked());
                                           stories.get(storyId).getOtherImglk().set(i, String.valueOf(images.get(i).getTotalike()));
@@ -400,6 +401,7 @@ public class StorySlideshowFragment extends DialogFragment {
                     .listener(new RequestListener<String, GlideDrawable>() {
                         @Override
                         public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+//                            Log.e("importany", e.getMessage());
                             return false;
                         }
 

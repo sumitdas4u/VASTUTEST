@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.utsavmobileapp.utsavapp.service.Common;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,24 +18,28 @@ import java.util.Locale;
  * Created by Bibaswann on 06-04-2017.
  */
 
-public class ParseChatterJSON {
+public class ParseMultipleChatterJSON {
     public volatile boolean parsingInComplete = true;
     String status, msg;
     int count;
     Context mContext;
     com.utsavmobileapp.utsavapp.service.Common Common;
-    private String urlString = null;
-    private List<String> uName = new ArrayList<>();
-    private List<String> uId = new ArrayList<>();
-    private List<String> uGender = new ArrayList<>();
-    private List<String> uDistance = new ArrayList<>();
-    private List<String> uAge = new ArrayList<>();
-    private List<String> uImg = new ArrayList<>();
-    private List<String> uTotalPhoto = new ArrayList<>();
-    private List<String> uTotalRvw = new ArrayList<>();
-    private List<String> uLastLogin = new ArrayList<>();
 
-    public ParseChatterJSON(String url, Context context) {
+    private String urlString = null;
+
+    private List<String> uName=new ArrayList<>();
+    private List<String> uId=new ArrayList<>();
+    private List<String> uGender=new ArrayList<>();
+    private List<String> uDistance=new ArrayList<>();
+    private List<String> uAge=new ArrayList<>();
+    private List<String> uImg=new ArrayList<>();
+    private List<String> uTotalPhoto=new ArrayList<>();
+    private List<String> uTotalRvw=new ArrayList<>();
+    private List<String> uTotalChckIn=new ArrayList<>();
+    private List<String> uLastLogin=new ArrayList<>();
+    private List<String> uStatus=new ArrayList<>();
+
+    public ParseMultipleChatterJSON(String url, Context context) {
         urlString = url;
         mContext = context;
         Common = new Common(mContext);
@@ -72,6 +77,14 @@ public class ParseChatterJSON {
         return uTotalRvw;
     }
 
+    public List<String> getuTotalChckIn() {
+        return uTotalChckIn;
+    }
+
+    public List<String> getuStatus() {
+        return uStatus;
+    }
+
     public List<String> getuLastLogin() {
         return uLastLogin;
     }
@@ -92,10 +105,12 @@ public class ParseChatterJSON {
                     uId.add(jsonObject.optString("user_id"));
                     uDistance.add(jsonObject.optString("user_distance") + "KM");
                     uGender.add(jsonObject.optString("user_gender"));
+                    uStatus.add(jsonObject.optString("user_profile_status"));
                     uAge.add(jsonObject.optString("user_age"));
                     uImg.add(jsonObject.optString("user_photo"));
                     uTotalPhoto.add(jsonObject.optString("user_total_photos"));
                     uTotalRvw.add(jsonObject.optString("user_total_review"));
+                    uTotalChckIn.add(jsonObject.optString("user_total_check_in"));
                     uLastLogin.add(new SimpleDateFormat("MMMM d, yyyy ',' h:mm a", new Locale("en", "IN")).format(Long.parseLong(jsonObject.optString("user_last_update"))*1000));
                 }
             }

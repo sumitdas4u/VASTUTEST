@@ -16,11 +16,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
 import com.utsavmobileapp.utsavapp.ChatActivity;
 import com.utsavmobileapp.utsavapp.ProfileActivity;
 import com.utsavmobileapp.utsavapp.R;
-import com.utsavmobileapp.utsavapp.parser.ParseChatterJSON;
+import com.utsavmobileapp.utsavapp.parser.ParseSingleChatterJSON;
 import com.utsavmobileapp.utsavapp.service.ChatCachingAPI;
 import com.utsavmobileapp.utsavapp.service.LatLonCachingAPI;
 
@@ -127,14 +126,14 @@ public class ChatterAdapter extends RecyclerView.Adapter<ChatterAdapter.ChatView
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
 
         LatLonCachingAPI llc=new LatLonCachingAPI(mContext);
-        ParseChatterJSON prnpj = new ParseChatterJSON(mContext.getString(R.string.uniurl) + "/api/user.php?lat=" + llc.readLat() + "&long=" + llc.readLng() + "&type=SINGLE&user_id_lists=" + uid, mContext);
+        ParseSingleChatterJSON prnpj = new ParseSingleChatterJSON(mContext.getString(R.string.uniurl) + "/api/user.php?lat=" + llc.readLat() + "&long=" + llc.readLng() + "&type=SINGLE&user_id_lists=" + uid, mContext);
         prnpj.fetchJSON();
         while (prnpj.parsingInComplete) ;
 
-        ((TextView)dialog.findViewById(R.id.name)).setText(prnpj.getuName().get(0));
-        ((TextView)dialog.findViewById(R.id.tvActiveNow)).setText(prnpj.getuLastLogin().get(0));
+        ((TextView)dialog.findViewById(R.id.name)).setText(prnpj.getuName());
+        ((TextView)dialog.findViewById(R.id.tvActiveNow)).setText(prnpj.getuLastLogin());
         ImageView image = (ImageView)dialog.findViewById(R.id.image);
-        Glide.with(mContext).load(prnpj.getuImg().get(0)).into(image);
+        Glide.with(mContext).load(prnpj.getuImg()).into(image);
         ((Button) dialog.findViewById(R.id.bt_send_message)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

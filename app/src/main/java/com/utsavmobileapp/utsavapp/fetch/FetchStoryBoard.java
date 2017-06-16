@@ -58,7 +58,7 @@ public class FetchStoryBoard extends AsyncTask<List<StoryObject>, Void, List<Sto
         if (fId != null) {
             prstb = new ParseStoryBoard(mContext.getString(R.string.uniurl) + "/api/stroryboard.php?page=" + page + "&limit=" + limit + "&user_id=" + lcp.readSetting("id") + "&festival_id=" + fId, mContext);
         } else if (uId != null) {
-            prstb = new ParseStoryBoard(mContext.getString(R.string.uniurl) + "/api/stroryboard.php?page=" + page + "&limit=" + limit + "&user_id=" + uId + "&single_user=true", mContext);
+            prstb = new ParseStoryBoard(mContext.getString(R.string.uniurl) + "/api/stroryboard.php?page=" + page + "&limit=" + limit + "&user_id=" + uId + "&single_user=true&show_review=true", mContext);
         } else
             prstb = new ParseStoryBoard(mContext.getString(R.string.uniurl) + "/api/stroryboard.php?page=" + page + "&limit=" + limit + "&user_id=" + lcp.readSetting("id"), mContext);
         prstb.fetchJSON();
