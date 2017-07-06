@@ -13,10 +13,25 @@
         android:orientation="vertical"
         android:padding="@dimen/spacing_xlarge">
 
-        <ImageView
+        <RelativeLayout
             android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@drawable/profile" />
+            android:layout_height="120dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/dpView"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/profile1"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/dpChange"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_mode_edit_black_24dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,31 +41,12 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/my_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Bibaswann Bandyopadhyay"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                android:textColor="@color/material_grey_800" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/spacing_mlarge"
-                    android:layout_height="@dimen/spacing_mlarge"
-                    android:src="@drawable/ic_pin"
-                    android:tint="@color/grey_hard" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="San Francisco, CA"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textColor="@color/material_grey_600" />
-            </LinearLayout>
+                android:textColor="@color/material_grey_800"/>
 
         </LinearLayout>
 
@@ -84,6 +80,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/my_photos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1.2 K"
@@ -111,6 +108,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/my_reviews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="293"
@@ -119,7 +117,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="FRIENDS"
+                    android:text="REVIEWS"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                     android:textColor="@color/grey_hard" />
             </LinearLayout>
@@ -138,6 +136,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/my_checkins"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="57"
@@ -146,7 +145,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="VIDEOS"
+                    android:text="CHECK-INS"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                     android:textColor="@color/grey_hard" />
             </LinearLayout>

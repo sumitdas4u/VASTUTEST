@@ -39,6 +39,7 @@ public class ParseSingleChatterJSON {
     private String uGender;
     private String uDistance;
     private String uAge;
+    private String uDob;
     private String uImg;
     private String uTotalPhoto;
     private String uTotalRvw;
@@ -125,6 +126,10 @@ public class ParseSingleChatterJSON {
         return imgListNrml;
     }
 
+    public String getuDob() {
+        return uDob;
+    }
+
     private void parseJSONAndStoreIt(String jsonString) {
         try {
             JSONObject jsonRootObject = new JSONObject(jsonString);
@@ -143,6 +148,7 @@ public class ParseSingleChatterJSON {
                     uGender=jsonObject.optString("user_gender");
                     uStatus=jsonObject.optString("user_profile_status");
                     uAge=jsonObject.optString("user_age");
+                    uDob=jsonObject.optString("user_dob");
                     uImg=jsonObject.optString("user_photo");
                     uTotalPhoto=jsonObject.optString("user_total_photos");
                     uTotalRvw=jsonObject.optString("user_total_review");
