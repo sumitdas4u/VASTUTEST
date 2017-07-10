@@ -16,7 +16,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
             <LinearLayout
                 android:id="@+id/lyt_view_profile"
                 android:layout_width="match_parent"
@@ -26,6 +25,13 @@
                 android:orientation="vertical"
                 android:padding="@dimen/spacing_mlarge"
                 android:visibility="visible">
+
+                <ImageButton
+                    android:id="@+id/goBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/quantum_ic_play_arrow_grey600_36"
+                    android:layout_gravity="start"/>
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_image"
@@ -52,26 +58,13 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Title"
                         android:textColor="@android:color/primary_text_dark" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="@dimen/spacing_mlarge"
-                            android:layout_height="@dimen/spacing_mlarge"
-                            android:src="@drawable/ic_pin"
-                            android:tint="@android:color/white" />
-
                         <TextView
                             android:id="@+id/tag"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="San Francisco, CA"
+                            android:text="I am a f**king genius"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                             android:textColor="@android:color/white" />
-                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -123,6 +116,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/txtPhoto"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="1.2 K"
@@ -150,6 +144,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/txtRvw"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="293"
@@ -158,7 +153,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="FRIENDS"
+                            android:text="REVIEWS"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                             android:textColor="@color/grey_hard" />
                     </LinearLayout>
@@ -177,6 +172,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/txtChkIns"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="57"
@@ -185,7 +181,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="VIDEOS"
+                            android:text="CHECK-INS"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                             android:textColor="@color/grey_hard" />
                     </LinearLayout>
@@ -228,29 +224,27 @@
                     <!--android:textSize="12sp" />-->
             </RelativeLayout>
 
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
                 <LinearLayout
-                android:id="@+id/linearLayout1"
+                android:id="@+id/linearLayout2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp">
 
                 <ProgressBar
-                    android:id="@+id/nearPeopleProgress"
+                    android:id="@+id/usrPicProgress"
                     style="?android:attr/progressBarStyleSmall"
                     android:layout_width="wrap_content"
 
                     android:layout_height="wrap_content"
                     android:indeterminate="true" />
 
-                <!--<include layout="@layout/people_layout"/>-->
-
             </LinearLayout>
-            </HorizontalScrollView>
-
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none" />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
@@ -291,14 +285,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
-                    android:id="@+id/linearLayout1"
+                    android:id="@+id/linearLayout3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:paddingLeft="10dp">
 
                     <ProgressBar
-                        android:id="@+id/nearPeopleProgress"
+                        android:id="@+id/usrCheckinProgress"
                         style="?android:attr/progressBarStyleSmall"
                         android:layout_width="wrap_content"
 

@@ -176,10 +176,10 @@ if(null==mode){
             fetchImages();
             AdapterGallery mAdapter = new AdapterGallery(getApplicationContext(),  images);
             RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(), 6);
-            recyclerView.setLayoutManager(mLayoutManager);
-            recyclerView.setItemAnimator(new DefaultItemAnimator());
-            recyclerView.setAdapter(mAdapter);
-            recyclerView.addOnItemTouchListener(new AdapterGallery.RecyclerTouchListener(getApplicationContext(), recyclerView, new AdapterGallery.ClickListener() {
+            imageStrip.setLayoutManager(mLayoutManager);
+            imageStrip.setItemAnimator(new DefaultItemAnimator());
+            imageStrip.setAdapter(mAdapter);
+            imageStrip.addOnItemTouchListener(new AdapterGallery.RecyclerTouchListener(getApplicationContext(), imageStrip, new AdapterGallery.ClickListener() {
                 @Override
                 public void onClick(View view, int position) {
                     Bundle bundle = new Bundle();

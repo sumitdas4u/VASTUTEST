@@ -11,11 +11,10 @@
     android:paddingTop="8dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/dpView"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:scaleType="fitXY"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:src="@drawable/profile1" />
 
     <TextView

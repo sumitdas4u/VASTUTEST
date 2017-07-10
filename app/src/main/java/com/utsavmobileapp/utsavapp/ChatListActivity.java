@@ -7,10 +7,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,7 +16,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.utsavmobileapp.utsavapp.adapter.ChatterAdapter;
-import com.utsavmobileapp.utsavapp.parser.ParseChatterJSON;
+import com.utsavmobileapp.utsavapp.parser.ParseMultipleChatterJSON;
+import com.utsavmobileapp.utsavapp.parser.ParseSingleChatterJSON;
 import com.utsavmobileapp.utsavapp.service.ChatCachingAPI;
 import com.utsavmobileapp.utsavapp.service.Common;
 import com.utsavmobileapp.utsavapp.service.LatLonCachingAPI;
@@ -28,7 +27,6 @@ import com.utsavmobileapp.utsavapp.service.SettingsAPI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -186,7 +184,7 @@ public class ChatListActivity extends AppCompatActivity {
 //                user_list.clear();
 //                for (int i = 1; i < 200; i++)
 //                    user_list.add(String.valueOf(i));
-                ParseChatterJSON prnpj = new ParseChatterJSON(ChatListActivity.this.getString(R.string.uniurl) + "/api/user.php?lat=" + mLat + "&long=" + mLon + "&type=SINGLE&user_id_lists=" + android.text.TextUtils.join(",", user_list), ChatListActivity.this);
+                ParseMultipleChatterJSON prnpj = new ParseMultipleChatterJSON(ChatListActivity.this.getString(R.string.uniurl) + "/api/user.php?lat=" + mLat + "&long=" + mLon + "&type=SINGLE&user_id_lists=" + android.text.TextUtils.join(",", user_list), ChatListActivity.this);
                 prnpj.fetchJSON();
                 while (prnpj.parsingInComplete) ;
 

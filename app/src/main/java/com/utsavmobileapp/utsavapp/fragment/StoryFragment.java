@@ -288,13 +288,13 @@ public class StoryFragment extends Fragment implements AsyncResponseStoryBoard {
             }
             LinearLayout matharTolarDag = (LinearLayout) linerLayoutStoryBoardCard.findViewById(R.id.divider);
             if (stories.get(index).getFob().getName().equals("null")) {
-                matha.setVisibility(View.GONE);
                 if (mode.equals("festival"))
                     matharTolarDag.setVisibility(View.GONE);
 
             }
-            if (fId != null) {
+            if(fId!=null || uId!=null)
                 matha.setVisibility(View.GONE);
+            if (fId != null) {
                 matharTolarDag.setVisibility(View.GONE);
             } else {
                 matha.setOnClickListener(new View.OnClickListener() {

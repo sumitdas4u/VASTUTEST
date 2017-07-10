@@ -8,13 +8,6 @@
               android:orientation="vertical"
               tools:context="com.utsavmobileapp.utsavapp.ProfileActivity">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:background="@color/cpb_red_dark"
-                android:layout_height="?attr/actionBarSize">
-            </android.support.v7.widget.Toolbar>
-
     <include layout="@layout/content_profile"/>
 
 </LinearLayout>

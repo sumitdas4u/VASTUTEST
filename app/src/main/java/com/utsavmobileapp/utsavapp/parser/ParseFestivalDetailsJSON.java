@@ -1,6 +1,7 @@
 package com.utsavmobileapp.utsavapp.parser;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.utsavmobileapp.utsavapp.service.Common;
 
@@ -170,7 +171,7 @@ public class ParseFestivalDetailsJSON {
                 ftotalReview = jsonObject.optString("total_review");
                 ftotalBookMark = jsonObject.optString("total_bookmarked");
                 ftotalCheckIn = jsonObject.optString("total_check_in");
-                fisBookMarked = jsonObject.optString("is_bookmarked").equals("1") ? true : false;
+                fisBookMarked = jsonObject.optString("is_bookmarked").equals("1");
 
                 String photoStr = jsonObject.optString("photos");
                 if (!photoStr.equals("null")) {
@@ -205,7 +206,7 @@ public class ParseFestivalDetailsJSON {
             @Override
             public void run() {
                 try {
-
+//                    Log.e("important", urlString);
                     //Log.e("important", "found string " +sb.toString());
                     parseJSONAndStoreIt(Common.HttpURLConnection(urlString));
                     //stream.close();
