@@ -58,8 +58,8 @@ public class AdapterComment extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         rowView = inflater.inflate(R.layout.block_comment_adapter, null);
 
-        LinearLayout usrLayout = (LinearLayout) rowView.findViewById(R.id.usrLayout);
-        usrLayout.setOnClickListener(new View.OnClickListener() {
+        LinearLayout total = (LinearLayout) rowView.findViewById(R.id.totalLayout);
+        total.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent peopleDetails = new Intent(mContext, ProfileActivity.class);

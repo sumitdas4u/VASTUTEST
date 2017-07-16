@@ -17,12 +17,13 @@
         android:textColor="@android:color/white"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:text="1 of 3"
+        android:text="1 of 1"
         android:layout_above="@+id/linearLayout5"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="15dp" />
 
     <RelativeLayout
+        android:id="@+id/user_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

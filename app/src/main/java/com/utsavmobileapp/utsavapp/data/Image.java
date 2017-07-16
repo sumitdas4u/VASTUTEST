@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class Image implements Serializable {
     private String name;
     private String small, medium, large;
-    private String uploader, place, uploaderDp;
+    private String uploader, place, uploaderDp, uploaderId;
     private Integer totalike, totalcomment;
     private String timestamp;
     private boolean isLiked;
@@ -110,6 +110,14 @@ public class Image implements Serializable {
 
     public void setLiked(boolean liked) {
         isLiked = liked;
+    }
+
+    public void setUploaderId(String uploaderId) {
+        this.uploaderId = uploaderId;
+    }
+
+    public String getUploaderId() {
+        return uploaderId;
     }
 }
 

@@ -4,12 +4,12 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -28,6 +29,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
+import com.utsavmobileapp.utsavapp.ProfileActivity;
 import com.utsavmobileapp.utsavapp.R;
 import com.utsavmobileapp.utsavapp.adapter.AdapterComment;
 import com.utsavmobileapp.utsavapp.adapter.AdapterLike;
@@ -55,6 +57,7 @@ public class StorySlideshowFragment extends DialogFragment {
     Context mContext;
     Context mContext1;
     ImageView uDp;
+    RelativeLayout userLayout;
     TextView numComment;
     ListView previousLks, previousCmts;
     TextView lblCmt, lblLike;
@@ -103,7 +106,7 @@ public class StorySlideshowFragment extends DialogFragment {
         lblCount = (TextView) v.findViewById(R.id.lbl_count);
 
         Common = new Common(mContext);
-
+        userLayout= (RelativeLayout) v.findViewById(R.id.user_layout);
 
         uAndP = (TextView) v.findViewById(R.id.uploaderAndPlace);
         uDp = (ImageView) v.findViewById(R.id.imgDp);
@@ -113,6 +116,14 @@ public class StorySlideshowFragment extends DialogFragment {
         stories = StoryCommonObjectSingleton.getInstance().getStories();
         lblCmt = (TextView) v.findViewById(R.id.numCommentTextView);
 //        lblCmt.setTextColor(ContextCompat.getColor(mContext, R.color.white_text));
+        userLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    Intent peopleDetails = new Intent(mContext, ProfileActivity.class);
+                    peopleDetails.putExtra("uid", images.get(selectedPosition).getUploaderId());
+                    mContext.startActivity(peopleDetails);
+            }
+        });
         lblCmt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -196,6 +207,8 @@ public class StorySlideshowFragment extends DialogFragment {
 
         images = (ArrayList<Image>) getArguments().getSerializable("images");
         imageIds = (ArrayList<String>) getArguments().getSerializable("imageids");
+        if(images.get(selectedPosition).getUploaderId()==null)
+            userLayout.setVisibility(View.INVISIBLE);
         selectedPosition = getArguments().getInt("position");
         storyId = getArguments().getInt("storyId");
         myViewPagerAdapter = new MyViewPagerAdapter();
@@ -371,7 +384,6 @@ public class StorySlideshowFragment extends DialogFragment {
             }
 
         } catch (Exception ignored) {
-            Log.d("important", "onDismiss: " + ignored.getMessage());
         }
 
     }
@@ -469,7 +481,7 @@ public class StorySlideshowFragment extends DialogFragment {
         }
     }
 
-    class LoadComments extends AsyncTask<Void, Void, Void> {
+    private class LoadComments extends AsyncTask<Void, Void, Void> {
         ParseStoryComments psc;
 
         LoadComments() {

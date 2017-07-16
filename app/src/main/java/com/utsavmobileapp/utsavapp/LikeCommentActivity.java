@@ -599,6 +599,7 @@ if(null==mode){
             imageAux.setUploader(stories.get(storyIndex).getUob().getName());
             imageAux.setPlace(stories.get(storyIndex).getFob().getName());
             imageAux.setUploaderDp(stories.get(storyIndex).getUob().getPrimg());
+            imageAux.setUploaderId(stories.get(storyIndex).getUob().getId());
             imageAux.setTotalike(Integer.parseInt(stories.get(storyIndex).getOtherImglk().get(imgIndx)));
             imageAux.setTotalcomment(Integer.parseInt(stories.get(storyIndex).getOtherImgcmt().get(imgIndx)));
             imageAux.setLiked(stories.get(storyIndex).getOtherImgIsLiked().get(imgIndx));

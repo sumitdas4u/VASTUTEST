@@ -2,6 +2,7 @@ package com.utsavmobileapp.utsavapp.fetch;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -56,15 +57,14 @@ public class FetchStoryBoard extends AsyncTask<List<StoryObject>, Void, List<Sto
     protected List<StoryObject> doInBackground(List<StoryObject>... List) {
         ParseStoryBoard prstb;
         if (fId != null) {
-            prstb = new ParseStoryBoard(mContext.getString(R.string.uniurl) + "/api/stroryboard.php?page=" + page + "&limit=" + limit + "&user_id=" + lcp.readSetting("id") + "&festival_id=" + fId, mContext);
+            prstb = new ParseStoryBoard(mContext.getString(R.string.uniurl) + "/api/storyboard.php?page=" + page + "&limit=" + limit + "&user_id=" + lcp.readSetting("id") + "&festival_id=" + fId, mContext);
         } else if (uId != null) {
-            prstb = new ParseStoryBoard(mContext.getString(R.string.uniurl) + "/api/stroryboard.php?page=" + page + "&limit=" + limit + "&user_id=" + uId + "&single_user=true&show_review=true", mContext);
+            prstb = new ParseStoryBoard(mContext.getString(R.string.uniurl) + "/api/storyboard.php?page=" + page + "&limit=" + limit + "&user_id=" + uId + "&single_user=true&show_review=true", mContext);
         } else
-            prstb = new ParseStoryBoard(mContext.getString(R.string.uniurl) + "/api/stroryboard.php?page=" + page + "&limit=" + limit + "&user_id=" + lcp.readSetting("id"), mContext);
+            prstb = new ParseStoryBoard(mContext.getString(R.string.uniurl) + "/api/storyboard.php?page=" + page + "&limit=" + limit + "&user_id=" + lcp.readSetting("id"), mContext);
         prstb.fetchJSON();
         while (prstb.parsingInComplete && (!this.isCancelled())) ;
         stories = prstb.getStories();
-
         return stories;
     }
 

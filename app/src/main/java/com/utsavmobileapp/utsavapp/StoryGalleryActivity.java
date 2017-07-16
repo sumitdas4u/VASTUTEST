@@ -127,6 +127,7 @@ public class StoryGalleryActivity extends AppCompatActivity {
             imageAux.setUploader(oneStory.getUob().getName());
             imageAux.setPlace(oneStory.getFob().getName());
             imageAux.setUploaderDp(oneStory.getUob().getPrimg());
+            imageAux.setUploaderId(oneStory.getUob().getId());
             imageAux.setTotalike(Integer.parseInt(oneStory.getOtherImglk().get(imgIndx)));
             imageAux.setTotalcomment(Integer.parseInt(oneStory.getOtherImgcmt().get(imgIndx)));
             imageAux.setLiked(oneStory.getOtherImgIsLiked().get(imgIndx));
