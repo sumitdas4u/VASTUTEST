@@ -115,6 +115,7 @@ public class ProfileActivity extends AppCompatActivity implements StoryFragment.
             imageAux.setUploader(prnpj.getuName());
             imageAux.setPlace("NA");
             imageAux.setUploaderDp(prnpj.getuImg());
+            imageAux.setUploaderId(prnpj.getuId());
             imageAux.setTotalike(Integer.parseInt(prnpj.getImgListLk().get(imgIndx)));
             imageAux.setTotalcomment(Integer.parseInt(prnpj.getImgListCmt().get(imgIndx)));
             imageAux.setLiked(prnpj.getImgListIsLiked().get(imgIndx));
@@ -134,6 +135,7 @@ public class ProfileActivity extends AppCompatActivity implements StoryFragment.
             imageAux.setUploader(prnpj.getuName());
             imageAux.setPlace("NA");
             imageAux.setUploaderDp(prnpj.getuImg());
+            imageAux.setUploaderId(prnpj.getuId());
             imageAux.setTotalike(Integer.parseInt(prnpj.getImgListLk().get(imgIndx)));
             imageAux.setTotalcomment(Integer.parseInt(prnpj.getImgListCmt().get(imgIndx)));
             imageAux.setLiked(prnpj.getImgListIsLiked().get(imgIndx));

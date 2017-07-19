@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -297,6 +298,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 conn.connect();
                 //Log.e("important",getPostData());
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+//                Log.e("important", getPostData());
                 writer.write(getPostData());
                 writer.flush();
                 writer.close();

@@ -157,7 +157,7 @@ public class StoryFragment extends Fragment implements AsyncResponseStoryBoard {
         fstb.delegateAsyncStoryBoard = this;
         fstb.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
-        if(parent.getChildCount()<4) {
+        if (parent.getChildCount() < 4) {
             parent.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
                 @Override
                 public void onScrollChanged() {
@@ -279,6 +279,7 @@ public class StoryFragment extends Fragment implements AsyncResponseStoryBoard {
 
 
         final LinearLayout linerLayoutStoryBoardCard = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.block_card_layout, card, false);
+
         if (mode != null) {
             LinearLayout matha;
             if (mode.equals("festival"))
@@ -292,7 +293,8 @@ public class StoryFragment extends Fragment implements AsyncResponseStoryBoard {
                     matharTolarDag.setVisibility(View.GONE);
 
             }
-            if(fId!=null || uId!=null)
+
+            if (fId != null || uId != null)
                 matha.setVisibility(View.GONE);
             if (fId != null) {
                 matharTolarDag.setVisibility(View.GONE);
@@ -317,6 +319,16 @@ public class StoryFragment extends Fragment implements AsyncResponseStoryBoard {
                 Intent peopleDetails = new Intent(mContext, ProfileActivity.class);
                 peopleDetails.putExtra("uid", stories.get(index).getUob().getId());
                 mContext.startActivity(peopleDetails);
+            }
+        });
+        LinearLayout fstvl= (LinearLayout) linerLayoutStoryBoardCard.findViewById(R.id.cardViewStoryboard);
+        fstvl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(mContext, DetailsActivity.class);
+                i.putExtra("id", stories.get(index).getFob().getId());
+                i.putExtra("name", stories.get(index).getFob().getName());
+                mContext.startActivity(i);
             }
         });
 
@@ -385,6 +397,7 @@ public class StoryFragment extends Fragment implements AsyncResponseStoryBoard {
                 imageAux.setUploader(stories.get(index).getUob().getName());
                 imageAux.setPlace(stories.get(index).getFob().getName());
                 imageAux.setUploaderDp(stories.get(index).getUob().getPrimg());
+                imageAux.setUploaderId(stories.get(index).getUob().getId());
                 imageAux.setTotalike(Integer.parseInt(stories.get(index).getOtherImglk().get(imgIndx)));
                 imageAux.setTotalcomment(Integer.parseInt(stories.get(index).getOtherImgcmt().get(imgIndx)));
                 imageAux.setLiked(stories.get(index).getOtherImgIsLiked().get(imgIndx));
@@ -404,6 +417,7 @@ public class StoryFragment extends Fragment implements AsyncResponseStoryBoard {
                 imageAux.setUploader(stories.get(index).getUob().getName());
                 imageAux.setPlace(stories.get(index).getFob().getName());
                 imageAux.setUploaderDp(stories.get(index).getUob().getPrimg());
+                imageAux.setUploaderId(stories.get(index).getUob().getId());
                 imageAux.setTotalike(Integer.parseInt(stories.get(index).getOtherImglk().get(imgIndx)));
                 imageAux.setTotalcomment(Integer.parseInt(stories.get(index).getOtherImgcmt().get(imgIndx)));
                 imageAux.setLiked(stories.get(index).getOtherImgIsLiked().get(imgIndx));
@@ -637,7 +651,6 @@ public class StoryFragment extends Fragment implements AsyncResponseStoryBoard {
 //        } catch (IndexOutOfBoundsException ignored) {
 //        }
     }
-
 
 
     public interface OnFragmentInteractionListener {
