@@ -21,6 +21,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -157,6 +158,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onRestart() {
+        if (isLoggedIn)
+            showLoggedInUserInfo(lcp.readSetting("name"), lcp.readSetting("photo"), true);
+        super.onRestart();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
 
@@ -166,9 +174,7 @@ public class MainActivity extends AppCompatActivity
         usrNm = (TextView) findViewById(R.id.usrName);
         dp = (ImageView) findViewById(R.id.dpView);
 
-
         new DownloadAddress().execute();
-
 
         Intent intent = new Intent(this, LoginActivity.class);
         intent.putExtra("mode", "login");
@@ -293,11 +299,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_chat) {
             Intent i = new Intent(this, ChatListActivity.class);
             startActivity(i);
-        }
-
-        else if(id==R.id.nav_profile)
-        {
-Intent i=new Intent(this,MyProfileActivity.class);
+        } else if (id == R.id.nav_profile) {
+            Intent i = new Intent(this, MyProfileActivity.class);
             startActivity(i);
         }
 
@@ -365,6 +368,7 @@ Intent i=new Intent(this,MyProfileActivity.class);
     }
 
     private void showLoggedInUserInfo(String name, String img, boolean login) {
+        Log.e("important", "updating dp");
         if (login) {
             usrNm.setText(name);
             Common.ImageDownloaderTask(dp, this, img, "user");
