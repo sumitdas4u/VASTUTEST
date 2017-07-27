@@ -368,7 +368,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showLoggedInUserInfo(String name, String img, boolean login) {
-        Log.e("important", "updating dp");
         if (login) {
             usrNm.setText(name);
             Common.ImageDownloaderTask(dp, this, img, "user");
