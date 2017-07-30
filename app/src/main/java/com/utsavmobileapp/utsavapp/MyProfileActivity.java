@@ -177,12 +177,6 @@ public class MyProfileActivity extends AppCompatActivity {
                         Common.HttpURLConnection(getString(R.string.uniurl) + "/api/user.php?type=UPDATE&user_id=" + lcp.readSetting("id") + "&lat=" + llc.readLat() + "&long=" + llc.readLng() + "&dob=" + selectedYear + "-" + selectedMonth + "-" + selectedDay);
                     } catch (IOException ignored) {
                     }
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            showInfo();
-                        }
-                    });
                 }
             }).start();
         }
@@ -201,7 +195,6 @@ public class MyProfileActivity extends AppCompatActivity {
         myReview.setText(prnpj.getuTotalRvw());
         myCheckin.setText(prnpj.getuTotalChckIn());
         lcp.addUpdateSettings("photo", prnpj.getuImg());
-
         common.ImageDownloaderTask(dp, this, lcp.readSetting("photo"), "user");
     }
 
@@ -340,6 +333,7 @@ public class MyProfileActivity extends AppCompatActivity {
 
         @Override
         public void onCompleted(UploadInfo uploadInfo, ServerResponse serverResponse) {
+            showInfo();
         }
 
         @Override
@@ -352,7 +346,6 @@ public class MyProfileActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            showInfo();
             super.onPostExecute(aVoid);
         }
 
