@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.vision.text.Line;
 import com.utsavmobileapp.utsavapp.ChatActivity;
 import com.utsavmobileapp.utsavapp.ProfileActivity;
 import com.utsavmobileapp.utsavapp.R;
@@ -38,14 +39,14 @@ public class ChatterAdapter extends RecyclerView.Adapter<ChatterAdapter.ChatView
     private List<String> unread;
     ChatCachingAPI cca;
 
-    public ChatterAdapter(Context context, List<String> ids, List<String> names, List<String> photos, List<String> last,List<String> notRead) {
+    public ChatterAdapter(Context context, List<String> ids, List<String> names, List<String> photos, List<String> last, List<String> notRead) {
         userId = ids;
         userName = names;
         userPhoto = photos;
         mContext = context;
-        lastMsg=last;
-        unread=notRead;
-        cca=new ChatCachingAPI(context);
+        lastMsg = last;
+        unread = notRead;
+        cca = new ChatCachingAPI(context);
     }
 
     @Override
@@ -59,7 +60,10 @@ public class ChatterAdapter extends RecyclerView.Adapter<ChatterAdapter.ChatView
     public void onBindViewHolder(ChatViewHolder holder, final int position) {
         holder.name.setText(userName.get(position));
         holder.last.setText(lastMsg.get(position));
-        holder.notRead.setText(unread.get(position));
+        if (Integer.parseInt(unread.get(position)) > 0)
+            holder.notRead.setVisibility(View.VISIBLE);
+        else
+            holder.notRead.setVisibility(View.GONE);
         if (userPhoto.get(position) == null) {
             holder.thumb.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.com_facebook_profile_picture_blank_square));
         } else {
@@ -76,10 +80,10 @@ public class ChatterAdapter extends RecyclerView.Adapter<ChatterAdapter.ChatView
         holder.total.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Integer prevSv=Integer.parseInt(cca.readCount(userId.get(position)));
-                Integer unrd=Integer.parseInt(unread.get(position));
-                Integer nowSave=prevSv+unrd;
-                cca.addUpdateCount(userId.get(position),nowSave.toString());
+                Integer prevSv = Integer.parseInt(cca.readCount(userId.get(position)));
+                Integer unrd = Integer.parseInt(unread.get(position));
+                Integer nowSave = prevSv + unrd;
+                cca.addUpdateCount(userId.get(position), nowSave.toString());
 
                 Intent chatent = new Intent(mContext, ChatActivity.class);
                 chatent.putExtra("grlfrnd", userId.get(position));
@@ -101,7 +105,7 @@ public class ChatterAdapter extends RecyclerView.Adapter<ChatterAdapter.ChatView
     public class ChatViewHolder extends RecyclerView.ViewHolder {
         public TextView name;
         public TextView last;
-        public TextView notRead;
+        public LinearLayout notRead;
         ImageView thumb;
         LinearLayout total;
 
@@ -110,7 +114,7 @@ public class ChatterAdapter extends RecyclerView.Adapter<ChatterAdapter.ChatView
             total = (LinearLayout) itemView.findViewById(R.id.chatter_list_item);
             name = (TextView) itemView.findViewById(R.id.user_name);
             last = (TextView) itemView.findViewById(R.id.extra_info);
-            notRead = (TextView) itemView.findViewById(R.id.unread);
+            notRead = (LinearLayout) itemView.findViewById(R.id.unread);
             thumb = (ImageView) itemView.findViewById(R.id.user_photo);
         }
     }
@@ -125,14 +129,14 @@ public class ChatterAdapter extends RecyclerView.Adapter<ChatterAdapter.ChatView
         lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
 
-        LatLonCachingAPI llc=new LatLonCachingAPI(mContext);
+        LatLonCachingAPI llc = new LatLonCachingAPI(mContext);
         ParseSingleChatterJSON prnpj = new ParseSingleChatterJSON(mContext.getString(R.string.uniurl) + "/api/user.php?lat=" + llc.readLat() + "&long=" + llc.readLng() + "&type=SINGLE&user_id_lists=" + uid, mContext);
         prnpj.fetchJSON();
         while (prnpj.parsingInComplete) ;
 
-        ((TextView)dialog.findViewById(R.id.name)).setText(prnpj.getuName());
-        ((TextView)dialog.findViewById(R.id.tvActiveNow)).setText(prnpj.getuLastLogin());
-        ImageView image = (ImageView)dialog.findViewById(R.id.image);
+        ((TextView) dialog.findViewById(R.id.name)).setText(prnpj.getuName());
+        ((TextView) dialog.findViewById(R.id.tvActiveNow)).setText(prnpj.getuLastLogin());
+        ImageView image = (ImageView) dialog.findViewById(R.id.image);
         Glide.with(mContext).load(prnpj.getuImg()).into(image);
         ((Button) dialog.findViewById(R.id.bt_send_message)).setOnClickListener(new View.OnClickListener() {
             @Override

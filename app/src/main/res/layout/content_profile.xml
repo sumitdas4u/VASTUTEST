@@ -30,7 +30,7 @@
                     android:id="@+id/goBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/quantum_ic_play_arrow_grey600_36"
+                    android:background="@drawable/ic_keyboard_backspace_white_24dp"
                     android:layout_gravity="start"/>
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -194,6 +194,7 @@
                 android:layout_height="1px"
                 android:background="@color/grey_soft" />
             <RelativeLayout
+                android:id="@+id/photo_head"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -251,6 +252,7 @@
                 android:background="@color/grey_soft" />
 
             <RelativeLayout
+                android:id="@+id/checkin_head"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -305,6 +307,7 @@
             </HorizontalScrollView>
 
             <LinearLayout
+                android:id="@+id/user_story_head"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"

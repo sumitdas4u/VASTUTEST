@@ -177,7 +177,7 @@ public class ChatActivity extends AppCompatActivity implements GoogleApiClient.O
                 if(iBlocked)
                 {
                     AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
-                    builder.setMessage("Do you want to unblock this shariff insaan?")
+                    builder.setMessage("Do you want to unblock this person?")
                             .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     mFirebaseDatabaseReference.child(MESSAGES_CHILD + "/" + chatNode+"/blocked").removeValue();
@@ -194,7 +194,7 @@ public class ChatActivity extends AppCompatActivity implements GoogleApiClient.O
                 }
                 else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
-                    builder.setMessage("Do you want to block this romeo?")
+                    builder.setMessage("Do you want to block this person?")
                             .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     mFirebaseDatabaseReference.child(MESSAGES_CHILD + "/" + chatNode + "/blocked").push().setValue(mUserId);

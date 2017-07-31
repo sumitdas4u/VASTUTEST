@@ -101,8 +101,11 @@ public class FetchNearPeople extends AsyncTask<Void, Void, Void> {
             TextView dist = (TextView) ll.findViewById(R.id.nearPplDistance);
             dist.setText(uDistance.get(index));
 
-            TextView rat = (TextView) ll.findViewById(R.id.userage);
-            rat.setText(uAge.get(index));
+            TextView age = (TextView) ll.findViewById(R.id.userage);
+            if(!uAge.get(index).equals("null")) {
+                age.setText(uAge.get(index));
+                age.setVisibility(View.VISIBLE);
+            }
 
             ll.setOnClickListener(new View.OnClickListener() {
                 @Override

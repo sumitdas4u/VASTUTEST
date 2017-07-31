@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -39,6 +40,8 @@ public class ProfileActivity extends AppCompatActivity implements StoryFragment.
     ImageView dpView;
     RecyclerView imageStrip;
 
+    RelativeLayout photoHead,checkinHead;
+
     LinearLayout checkInLayout;
     ProgressBar checkInProgress,picProgress;
     ImageButton back;
@@ -57,6 +60,9 @@ public class ProfileActivity extends AppCompatActivity implements StoryFragment.
         photo= (TextView) findViewById(R.id.txtPhoto);
         review= (TextView) findViewById(R.id.txtRvw);
         checkin= (TextView) findViewById(R.id.txtChkIns);
+
+        photoHead= (RelativeLayout) findViewById(R.id.photo_head);
+        checkinHead= (RelativeLayout) findViewById(R.id.checkin_head);
 
         imageStrip = (RecyclerView) findViewById(R.id.recyclerSmall);
         checkInLayout = (LinearLayout) findViewById(R.id.linearLayout3);
@@ -84,6 +90,10 @@ public class ProfileActivity extends AppCompatActivity implements StoryFragment.
         checkin.setText(prnpj.getuTotalChckIn());
         Glide.with(this).load(prnpj.getuImg()).into(dpView);
 
+        if(prnpj.getuTotalPhoto().equals("0"))
+            photoHead.setVisibility(View.GONE);
+        if(prnpj.getuTotalChckIn().equals("0"))
+            checkinHead.setVisibility(View.GONE);
 
         final StoryFragment stf = new StoryFragment();
         Bundle bundle = new Bundle();

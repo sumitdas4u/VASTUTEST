@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -76,10 +77,11 @@ public class MyProfileActivity extends AppCompatActivity {
 
     ImageView editDob, editStatus;
     EditText statusText;
-    TextView dobLabel, statusLabel;
+    TextView dobLabel, statusLabel, subscriptionLbl;
     TextView myName, myPhoto, myReview, myCheckin;
     String status, dob;
     CircleImageView editDp;
+    Button buy;
 
     ArrayList<String> paths;
 
@@ -107,6 +109,9 @@ public class MyProfileActivity extends AppCompatActivity {
 
         dobLabel = (TextView) findViewById(R.id.dob_lbl);
         statusLabel = (TextView) findViewById(R.id.status_lbl);
+        subscriptionLbl = (TextView) findViewById(R.id.subscription_lbl);
+
+        buy = (Button) findViewById(R.id.buy_btn);
 
         myName = (TextView) findViewById(R.id.my_name);
         myPhoto = (TextView) findViewById(R.id.my_photos);
@@ -175,8 +180,16 @@ public class MyProfileActivity extends AppCompatActivity {
                 public void run() {
                     try {
                         Common.HttpURLConnection(getString(R.string.uniurl) + "/api/user.php?type=UPDATE&user_id=" + lcp.readSetting("id") + "&lat=" + llc.readLat() + "&long=" + llc.readLng() + "&dob=" + selectedYear + "-" + selectedMonth + "-" + selectedDay);
+//                        Log.e("important",getString(R.string.uniurl) + "/api/user.php?type=UPDATE&user_id=" + lcp.readSetting("id") + "&lat=" + llc.readLat() + "&long=" + llc.readLng() + "&dob=" + selectedYear + "-" + selectedMonth + "-" + selectedDay);
                     } catch (IOException ignored) {
+                        Toast.makeText(MyProfileActivity.this, "Could not connect", Toast.LENGTH_SHORT).show();
                     }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showInfo();
+                        }
+                    });
                 }
             }).start();
         }
@@ -184,6 +197,7 @@ public class MyProfileActivity extends AppCompatActivity {
 
     private void showInfo() {
         ParseSingleChatterJSON prnpj = new ParseSingleChatterJSON(this.getString(R.string.uniurl) + "/api/user.php?lat=" + llc.readLat() + "&long=" + llc.readLng() + "&type=SINGLE&user_id_lists=" + lcp.readSetting("id"), this);
+//        Log.e("important", getString(R.string.uniurl) + "/api/user.php?lat=" + llc.readLat() + "&long=" + llc.readLng() + "&type=SINGLE&user_id_lists=" + lcp.readSetting("id"));
         prnpj.fetchJSON();
         while (prnpj.parsingInComplete) ;
         myName.setText(prnpj.getuName());
@@ -191,6 +205,21 @@ public class MyProfileActivity extends AppCompatActivity {
         statusLabel.setText(status);
         dob = prnpj.getuDob();
         dobLabel.setText(dob);
+        if (lcp.readSetting("subscription").equals("false")) {
+            subscriptionLbl.setText("Free member");
+            buy.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+//                    Intent i = new Intent(MyProfileActivity.this, SomeClass.class);
+//                    i.putExtra("key", "value");
+//                    startActivity(i);
+                    Toast.makeText(MyProfileActivity.this, "Falo kori makho tel", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            subscriptionLbl.setText("Premium member");
+            buy.setVisibility(View.GONE);
+        }
         myPhoto.setText(prnpj.getuTotalPhoto());
         myReview.setText(prnpj.getuTotalRvw());
         myCheckin.setText(prnpj.getuTotalChckIn());

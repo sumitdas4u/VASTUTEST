@@ -46,13 +46,12 @@
                     android:textColor="#424242"
                     android:textStyle="bold"/>
 
-                <TextView
+                <LinearLayout
+                    android:orientation="vertical"
                     android:id="@+id/unread"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="01.30"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                    android:textColor="@color/material_grey_600" />
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorAccent" />
             </LinearLayout>
 
             <TextView

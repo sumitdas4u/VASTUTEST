@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "693340001832-9ai9qgvega34a280pbidba15c4o71b8f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.utsavmobileapp.utsavapp",
+            "certificate_hash": "060e36e0f5ff0aa21953dfd543c946a4fe4e17b1"
+          }
+        },
+        {
+          "client_id": "693340001832-6nc3n90pntcr8j6do0jposab8mdmuosv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.utsavmobileapp.utsavapp",
+            "certificate_hash": "befea8b9b340b708ac2cf398c4d5adb0e852da06"
+          }
+        },
+        {
           "client_id": "693340001832-1sm2fi34bhathlahj5dn4fgp2c79vf79.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
