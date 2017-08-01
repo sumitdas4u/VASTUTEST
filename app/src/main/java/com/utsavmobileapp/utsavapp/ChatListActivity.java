@@ -218,8 +218,8 @@ public class ChatListActivity extends AppCompatActivity {
                 }
                 for (int i : indexes) {
 //                    Log.e("important", "adding "+user_list.get(i));
-                    if(user_list.size()>i) {
-                        if(!uIdFinal.contains(user_list.get(i))) {
+                    if (user_list.size() > i) {
+                        if (!uIdFinal.contains(user_list.get(i))) {
                             uIdFinal.add(user_list.get(i));
                             uLastMsgFinal.add(uLastMsg.get(i));
                             uUnreadFinal.add(uUnread.get(i));
@@ -231,9 +231,8 @@ public class ChatListActivity extends AppCompatActivity {
                 Collections.reverse(uLastMsgFinal);
                 Collections.reverse(uUnreadFinal);
 
-                for (String id:uIdFinal)
-                {
-                    int index=uId.indexOf(id);
+                for (String id : uIdFinal) {
+                    int index = uId.indexOf(id);
                     uNameFinal.add(uName.get(index));
                     uImgFinal.add(uImg.get(index));
                 }
