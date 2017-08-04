@@ -117,7 +117,7 @@ public class ParseMultipleChatterJSON {
             parsingInComplete = false;
         } catch (JSONException e) {
             parsingInComplete = false;
-            Log.e("important", "exception " + Log.getStackTraceString(e));
+//            Log.e("important", "exception " + Log.getStackTraceString(e));
         }
         parsingInComplete = false;
     }

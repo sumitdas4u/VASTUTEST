@@ -298,7 +298,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 conn.connect();
                 //Log.e("important",getPostData());
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-//                Log.e("important", getPostData());
+//               Log.e("important", getPostData());
                 writer.write(getPostData());
                 writer.flush();
                 writer.close();
@@ -310,7 +310,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                     if ((line = br.readLine()) != null) {
 
-                        //Log.e("important", "readline"+   br.readLine());
+//                        Log.e("important", "readline "+   line);
                         ParseLoginData pld = new ParseLoginData();
                         pld.parseJSONAndStoreIt(line);
                         while (pld.parsingInComplete) ;
@@ -319,6 +319,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         lcp.addUpdateSettings("fbid", pld.getUserFBId());
                         lcp.addUpdateSettings("googleid", pld.getUserGoogleId());
                         lcp.addUpdateSettings("name", pld.getUserNAme());
+                        lcp.addUpdateSettings("subscription", pld.getOrderStatus());
+                        lcp.addUpdateSettings("orderstart", pld.getOrderTimestamp());
 
                         if (lcp.readSetting("googleid").equals("null"))
                             lcp.addUpdateSettings("photo", pld.getUserSmallPhoto().replace("http", "https"));

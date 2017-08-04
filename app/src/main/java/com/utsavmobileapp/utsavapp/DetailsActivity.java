@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.andreabaccega.googlshortenerlib.GooglShortenerRequestBuilder;
@@ -40,6 +42,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class DetailsActivity extends AppCompatActivity implements FestivalDetailsInfoFragment.OnFragmentInteractionListener, StoryFragment.OnFragmentInteractionListener {
     public String fName;
@@ -74,6 +77,7 @@ public class DetailsActivity extends AppCompatActivity implements FestivalDetail
     CircularProgressButton chckIn;
 
 
+
     List<String> imgList = new ArrayList<>();
     List<String> imgListNrml = new ArrayList<>();
     List<String> imgListBig = new ArrayList<>();
@@ -97,9 +101,44 @@ public class DetailsActivity extends AppCompatActivity implements FestivalDetail
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        lca=new LoginCachingAPI(this);
+
+        Random rand = new Random();
+        if((rand.nextInt(3) + 1)==2)
+        {
+            if (lca.readSetting("login").equals("true")) {
+                if (lca.readSetting("subscription").equals("false")) {
+                    AlertDialog alertDialog = new AlertDialog.Builder(DetailsActivity.this).create();
+                    alertDialog.setTitle("Paysa de");
+                    alertDialog.setCancelable(false);
+                    alertDialog.setMessage("Give me money and I will give you freedom");
+                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Buy",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+//                                        Intent i = new Intent(MyProfileActivity.this, SomeClass.class);
+//                                        i.putExtra("key", "value");
+//                                        startActivity(i);
+                                }
+                            });
+                    alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Poysa nei",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    DetailsActivity.this.finish();
+                                }
+                            });
+                    alertDialog.show();
+
+                }
+            }
+            else
+            {
+                Toast.makeText(this,"Please register yourself",Toast.LENGTH_LONG).show();
+                DetailsActivity.this.finish();
+            }
+        }
+
         common = new Common(this);
         lcp = new LatLonCachingAPI(this);
-        lca = new LoginCachingAPI(this);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             fId = extras.getString("id");

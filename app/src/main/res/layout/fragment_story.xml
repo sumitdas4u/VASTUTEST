@@ -37,6 +37,14 @@
                     android:layout_gravity="center"
                     android:layout_margin="20dp"
                     android:indeterminate="true" />
+
+                <TextView
+                    android:id="@+id/no_story"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:text="No story present" />
             </LinearLayout>
 
     </ScrollView>

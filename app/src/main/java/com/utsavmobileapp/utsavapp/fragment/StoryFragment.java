@@ -65,6 +65,7 @@ public class StoryFragment extends Fragment implements AsyncResponseStoryBoard {
     ScrollView parent;
     int storyPage = 0, storyLimit;
     ProgressBar storyProg;
+    TextView noStory;
     LatLonCachingAPI llc;
     Context mContext;
     LoginCachingAPI lcp;
@@ -82,10 +83,11 @@ public class StoryFragment extends Fragment implements AsyncResponseStoryBoard {
     public void processFinish(List<StoryObject> output) {
 
         if (output != null) {
-            //   Log.e("important", output.size() + " object size");
+//            Log.e("important", output.size() + " object size");
             //  userList.add((User) ois.readObject());
             if (output.size() == 0) {
                 storyProg.setVisibility(View.GONE);
+                noStory.setVisibility(View.VISIBLE);
 //                Toast.makeText(mContext,"No story for this pujo, why don't you create one?", Toast.LENGTH_LONG).show();
             } else {
                 for (int i = 0; i < output.size(); i++) {
@@ -115,6 +117,7 @@ public class StoryFragment extends Fragment implements AsyncResponseStoryBoard {
         card = (LinearLayout) view.findViewById(R.id.card);
         cardholderStoryboard = (LinearLayout) view.findViewById(R.id.cardholderStoryboard);
         storyProg = (ProgressBar) view.findViewById(R.id.storyProgress);
+        noStory = (TextView) view.findViewById(R.id.no_story);
         llc = new LatLonCachingAPI(mContext);
         lcp = new LoginCachingAPI(mContext);
 
@@ -273,7 +276,6 @@ public class StoryFragment extends Fragment implements AsyncResponseStoryBoard {
 
     // StoryObject oneStory;
     private void ShowStories() {
-        storyProg.setVisibility(View.GONE);
 //        try {/// TODO: 11-04-2017 scroll crash here
         final int index = countIndex++;
 
@@ -321,7 +323,7 @@ public class StoryFragment extends Fragment implements AsyncResponseStoryBoard {
                 mContext.startActivity(peopleDetails);
             }
         });
-        LinearLayout fstvl= (LinearLayout) linerLayoutStoryBoardCard.findViewById(R.id.cardViewStoryboard);
+        LinearLayout fstvl = (LinearLayout) linerLayoutStoryBoardCard.findViewById(R.id.cardViewStoryboard);
         fstvl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

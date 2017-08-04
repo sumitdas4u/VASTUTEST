@@ -96,6 +96,7 @@ public class ChatActivity extends AppCompatActivity implements GoogleApiClient.O
     private String chatNode_2;
     private String mGirlFriend;
     private SharedPreferences mSharedPreferences;
+    private int numberOfMsgs = 0;
 
     private Button mSendButton;
     private RecyclerView mMessageRecyclerView;
@@ -174,14 +175,13 @@ public class ChatActivity extends AppCompatActivity implements GoogleApiClient.O
         int id = item.getItemId();
         switch (id) {
             case R.id.action_info:
-                if(iBlocked)
-                {
+                if (iBlocked) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
-                    builder.setMessage("Do you want to unblock this shariff insaan?")
+                    builder.setMessage("Do you want to unblock this person?")
                             .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    mFirebaseDatabaseReference.child(MESSAGES_CHILD + "/" + chatNode+"/blocked").removeValue();
-                                    iBlocked=false;
+                                    mFirebaseDatabaseReference.child(MESSAGES_CHILD + "/" + chatNode + "/blocked").removeValue();
+                                    iBlocked = false;
                                 }
                             })
                             .setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -191,10 +191,9 @@ public class ChatActivity extends AppCompatActivity implements GoogleApiClient.O
                             });
                     // Create the AlertDialog object and return it
                     builder.create().show();
-                }
-                else {
+                } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
-                    builder.setMessage("Do you want to block this romeo?")
+                    builder.setMessage("Do you want to block this person?")
                             .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     mFirebaseDatabaseReference.child(MESSAGES_CHILD + "/" + chatNode + "/blocked").push().setValue(mUserId);
@@ -220,6 +219,31 @@ public class ChatActivity extends AppCompatActivity implements GoogleApiClient.O
             mUserId = lcp.readSetting("id");
             mUsername = lcp.readSetting("name");
             mPhotoUrl = lcp.readSetting("photo");
+            if (!lcp.readSetting("gfs").equals("null"))
+                if (Integer.parseInt(lcp.readSetting("gfs")) > 4)
+                    if (lcp.readSetting("subscription").equals("false")) {
+                        AlertDialog alertDialog = new AlertDialog.Builder(ChatActivity.this).create();
+                        alertDialog.setTitle("Paysa de");
+                        alertDialog.setCancelable(false);
+                        alertDialog.setMessage("Give me money and I will give you freedom");
+                        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Buy",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+//                                        Intent i = new Intent(MyProfileActivity.this, SomeClass.class);
+//                                        i.putExtra("key", "value");
+//                                        startActivity(i);
+                                    }
+                                });
+                        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Poysa nei",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        ChatActivity.this.finish();
+                                    }
+                                });
+                        alertDialog.show();
+
+                    }
+
         } else {
             Intent intent = new Intent(this, LoginActivity.class);
             intent.putExtra("mode", "login");
@@ -252,8 +276,15 @@ public class ChatActivity extends AppCompatActivity implements GoogleApiClient.O
                         chatNode = chatNode_1;
                     } else if (snapshot.hasChild(MESSAGES_CHILD + "/" + chatNode_2)) {
                         chatNode = chatNode_2;
-                    } else
+                    } else {
                         chatNode = chatNode_1;
+                        if (lcp.readSetting("gfs").equals("null"))
+                            lcp.addUpdateSettings("gfs", "1");
+                        else {
+                            int gfs = Integer.parseInt(lcp.readSetting("gfs"));
+                            lcp.addUpdateSettings("gfs", String.valueOf(gfs + 1));
+                        }
+                    }
                 } else
                     chatNode = receivedNode;
 
@@ -296,7 +327,7 @@ public class ChatActivity extends AppCompatActivity implements GoogleApiClient.O
                                         .load(friendlyMessage.getPhotoUrl())
                                         .into(viewHolder.messengerImageView);
                             }
-
+                            numberOfMsgs++;
                             // write this message to the on-device index
                             FirebaseAppIndex.getInstance().update(getMessageIndexable(friendlyMessage));
 
@@ -382,13 +413,14 @@ public class ChatActivity extends AppCompatActivity implements GoogleApiClient.O
         mSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                boolean chattable = true;
                 if (iBlocked) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
                     builder.setMessage("You blocked this person, do you want to unblock?")
                             .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    mFirebaseDatabaseReference.child(MESSAGES_CHILD + "/" + chatNode+"/blocked").removeValue();
-                                    iBlocked=false;
+                                    mFirebaseDatabaseReference.child(MESSAGES_CHILD + "/" + chatNode + "/blocked").removeValue();
+                                    iBlocked = false;
                                 }
                             })
                             .setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -398,14 +430,41 @@ public class ChatActivity extends AppCompatActivity implements GoogleApiClient.O
                             });
                     // Create the AlertDialog object and return it
                     builder.create().show();
+                    chattable = false;
                 } else if (meBlocked) {
                     Snackbar.make(view, "This person has blocked you", Snackbar.LENGTH_LONG).show();
-                } else {
-                            final String msgBody = mMessageEditText.getText().toString();
-                            final ChatMessage friendlyMessage = new ChatMessage(mMessageEditText.getText().toString(), mUsername, mPhotoUrl, mUserId);
+                    chattable = false;
+                } else if (numberOfMsgs > 4) {
+                    if (lcp.readSetting("subscription").equals("false")) {
+                        AlertDialog alertDialog = new AlertDialog.Builder(ChatActivity.this).create();
+                        alertDialog.setTitle("Paysa de");
+                        alertDialog.setCancelable(false);
+                        alertDialog.setMessage("Give me money and I will give you freedom");
+                        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Buy",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+//                                        Intent i = new Intent(MyProfileActivity.this, SomeClass.class);
+//                                        i.putExtra("key", "value");
+//                                        startActivity(i);
+                                    }
+                                });
+                        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Poysa nei",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        ChatActivity.this.finish();
+                                    }
+                                });
+                        alertDialog.show();
+                        chattable = false;
+                    } else
+                        chattable = true;
+                }
+                if (chattable) {
+                    final String msgBody = mMessageEditText.getText().toString();
+                    final ChatMessage friendlyMessage = new ChatMessage(mMessageEditText.getText().toString(), mUsername, mPhotoUrl, mUserId);
 //                Log.e(TAG, "sending to "+MESSAGES_CHILD+"/"+chatNode);
-                            mMessageEditText.setText("");
-                            mFirebaseAnalytics.logEvent(MESSAGE_SENT_EVENT, null);
+                    mMessageEditText.setText("");
+                    mFirebaseAnalytics.logEvent(MESSAGE_SENT_EVENT, null);
                     AsyncTask.execute(new Runnable() {
                         @Override
                         public void run() {
@@ -417,6 +476,7 @@ public class ChatActivity extends AppCompatActivity implements GoogleApiClient.O
 //                            Log.e(TAG, "onClick: " + sb);
                             } catch (IOException ignored) {
                             }
+                            numberOfMsgs++;
                         }
                     });
                 }

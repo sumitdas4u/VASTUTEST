@@ -22,6 +22,8 @@ public class ParseLoginData {
     private String userAge;
     private String userGender;
     private String userIsLoggedIn;
+    private String orderStatus;
+    private String orderTimestamp;
 
     public String getUserAge() {
         return userAge;
@@ -55,6 +57,14 @@ public class ParseLoginData {
         return userIsLoggedIn;
     }
 
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public String getOrderTimestamp() {
+        return orderTimestamp;
+    }
+
     public void parseJSONAndStoreIt(String jsonString) {
         try {
             JSONObject jsonRootObject = new JSONObject(jsonString);
@@ -73,6 +83,8 @@ public class ParseLoginData {
                 userSmallPhoto = jsonObject.optString("user_small_photo");
                 userAge = jsonObject.optString("user_age");
                 userGender = jsonObject.optString("user_gender");
+                orderStatus = jsonObject.optString("order_details_status");
+                orderTimestamp = jsonObject.optString("order_details_timestamp");
             }
             parsingInComplete = false;
         } catch (JSONException e) {

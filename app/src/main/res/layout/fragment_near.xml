@@ -129,11 +129,9 @@
                 android:paddingTop="3dp">
 
                 <TextView
-
                     android:layout_width="fill_parent"
-
                     android:layout_height="wrap_content"
-                    android:text="Others"
+                    android:text="Emergency Contacts"
                     android:textColor="@android:color/secondary_text_light"
                     android:textSize="14sp" />
 
