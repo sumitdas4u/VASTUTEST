@@ -10,8 +10,8 @@ android {
         applicationId "com.utsavmobileapp.utsavapp"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 371000
-        versionName "3.7.1"
+        versionCode 400000
+        versionName "4.0.0"
         multiDexEnabled true
     }
     buildTypes {
@@ -38,7 +38,7 @@ dependencies {
     compile 'com.android.support:mediarouter-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:support-v4:25.3.1'
-    compile 'com.google.android.gms:play-services:10.2.1'
+    compile 'com.google.android.gms:play-services:11.0.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'com.android.volley:volley:1.0.0'
@@ -47,15 +47,15 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.github.jd-alexander:LikeButton:0.2.0'
     compile 'com.uber.sdk:rides-android:0.5.2'
-    compile 'com.google.firebase:firebase-core:10.2.1'
-    compile 'com.google.firebase:firebase-database:10.2.1'
-    compile 'com.google.firebase:firebase-crash:10.2.1'
-    compile 'com.google.firebase:firebase-invites:10.2.1'
-    compile 'com.google.firebase:firebase-messaging:10.2.1'
-    compile 'com.google.firebase:firebase-config:10.2.1'
-    compile 'com.google.firebase:firebase-appindexing:10.2.1'
-    compile 'com.google.firebase:firebase-auth:10.2.1'
-    compile 'com.google.firebase:firebase-storage:10.2.1'
+    compile 'com.google.firebase:firebase-core:11.0.0'
+    compile 'com.google.firebase:firebase-database:11.0.0'
+    compile 'com.google.firebase:firebase-crash:11.0.0'
+    compile 'com.google.firebase:firebase-invites:11.0.0'
+    compile 'com.google.firebase:firebase-messaging:11.0.0'
+    compile 'com.google.firebase:firebase-config:11.0.0'
+    compile 'com.google.firebase:firebase-appindexing:11.0.0'
+    compile 'com.google.firebase:firebase-auth:11.0.0'
+    compile 'com.google.firebase:firebase-storage:11.0.0'
     compile 'com.firebaseui:firebase-ui-database:0.4.0'
     compile 'com.hedgehog.ratingbar:app:1.1.0'
     compile 'me.iwf.photopicker:PhotoPicker:0.8.5@aar'
@@ -70,6 +70,8 @@ dependencies {
     compile 'com.balysv:material-ripple:1.0.2'
     compile 'com.github.pwittchen:infinitescroll:0.0.1'
     testCompile 'junit:junit:4.12'
+    compile files('libs/PGSDK_V2.1.jar')
+
 }
 
 apply plugin: 'com.google.gms.google-services'

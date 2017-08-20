@@ -131,7 +131,7 @@ public class SplashActivity extends AppCompatActivity implements
 
 
         //Turn on gps if off
-       /* String provider = Settings.Secure.getString(getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+       /* String provider = SettingsActivity.Secure.getString(getContentResolver(), SettingsActivity.Secure.LOCATION_PROVIDERS_ALLOWED);
 
         if(!provider.contains("gps")){ //if gps is disabled
             final Intent poke = new Intent();
@@ -161,7 +161,7 @@ public class SplashActivity extends AppCompatActivity implements
         //Check if this app was launched from a deep link. Setting autoLaunchDeepLink to true
         // would automatically launch the deep link if one is found.
         boolean autoLaunchDeepLink = false;
-        AppInvite.AppInviteApi.getInvitation(mGoogleApiClient, this, autoLaunchDeepLink)
+        AppInvite.AppInviteApi.getInvitation(mGoogleApiClient, this, false)
                 .setResultCallback(
                         new ResultCallback<AppInviteInvitationResult>() {
                             @Override

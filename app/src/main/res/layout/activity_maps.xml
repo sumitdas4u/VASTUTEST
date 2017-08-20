@@ -22,21 +22,8 @@
         android:layout_margin="10dp"
         android:gravity="left|center_vertical"
 
-        android:visibility="gone" />
-    <ToggleButton
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textOn="Show Road Blockage"
-        android:textOff="Hide Road Blockage"
-        android:id="@+id/btnBlock"
-        android:layout_alignParentTop="true"
+         />
 
-        android:layout_margin="10dp"
-        android:background="@color/__picker_item_photo_border_selected"
-        android:checked="false"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp" />
     <Button
         android:layout_width="match_parent"
         android:layout_height="50dp"

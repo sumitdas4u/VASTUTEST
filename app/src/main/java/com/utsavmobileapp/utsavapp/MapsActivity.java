@@ -92,7 +92,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String fDistance = getIntent().getExtras().getString("distance");
         btn.setText("Show Direction  ( " + fDistance + " )");
 
-        final ToggleButton btnBlock = (ToggleButton) findViewById(R.id.btnBlock);
+       /* final ToggleButton btnBlock = (ToggleButton) findViewById(R.id.btnBlock);
         if (lcp.readSetting("map_block").equals("null")) {
             btnBlock.setChecked(false);
         } else {
@@ -120,7 +120,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
             }
-        });
+        });*/
 
     }
 
@@ -339,7 +339,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         SessionConfiguration config = new SessionConfiguration.Builder()
                 .setClientId("daICWnPqs49oMCQVinaZ4iIzj4wX-1xG") //This is necessary
-                .setEnvironment(SessionConfiguration.Environment.SANDBOX)
+                .setEnvironment(SessionConfiguration.Environment.PRODUCTION)
                 .setServerToken("O2QWEJx4lthB9eMzfdZwAD6tEx9LmkCe_DKmlBGr")
                 .setScopes(Arrays.asList(Scope.PROFILE, Scope.RIDE_WIDGETS))
                 .build();
@@ -357,7 +357,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         requestButton.setRideParameters(rideParams);
         requestButton.setSession(session);
         requestButton.loadRideInformation();
-        retrieveFileFromUrl();
+        //retrieveFileFromUrl();
     }
 
     public void showDirection(View view) {
@@ -367,7 +367,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void retrieveFileFromUrl() {
-        new DownloadKmlFile(getString(R.string.kml_url)).execute();
+        //new DownloadKmlFile(getString(R.string.kml_url)).execute();
     }
 
     private class DownloadKmlFile extends AsyncTask<String, Void, byte[]> {

@@ -11,8 +11,8 @@ package com.utsavmobileapp.utsavapp;
 //again by sumit das
 
 public class ChatExtraData {
-    String uid,uUnread;
-    Long uLastMsg;
+    private String uid,uUnread;
+    private Long uLastMsg;
     ChatExtraData(String id, Long lastTime,String unread)
     {
         uid=id;

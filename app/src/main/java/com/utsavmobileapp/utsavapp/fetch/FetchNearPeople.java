@@ -94,7 +94,12 @@ public class FetchNearPeople extends AsyncTask<Void, Void, Void> {
             Common.ImageDownloaderTask(img, mContext, uImg.get(index).replace("http", "https"), "user");
             TextView name = (TextView) ll.findViewById(R.id.nearPplName);
             name.setText(uName.get(index));
-
+            ll.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    com.utsavmobileapp.utsavapp.service.Common.dialogPeopoleDetails(uId.toString(),mContext);
+                }
+            });
             // TextView gndr = (TextView) ll.findViewById(R.id.nearPplGndr);
             // gndr.setText(uGender.get(index));
 

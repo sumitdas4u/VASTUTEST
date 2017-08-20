@@ -1,10 +1,19 @@
 package com.utsavmobileapp.utsavapp.service;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
+import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -13,12 +22,17 @@ import com.facebook.FacebookRequestError;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
+import com.paytm.pgsdk.PaytmOrder;
+import com.paytm.pgsdk.PaytmPGService;
+import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.squareup.picasso.Picasso;
 import com.utsavmobileapp.utsavapp.LoginActivity;
+import com.utsavmobileapp.utsavapp.ProfileActivity;
 import com.utsavmobileapp.utsavapp.R;
+import com.utsavmobileapp.utsavapp.parser.ParseSingleChatterJSON;
 
 import org.apache.log4j.helpers.Transform;
 import org.json.JSONException;
@@ -26,34 +40,310 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Common {
-    static final long SECOND_MILLIS = 1000;
-    static final long MINUTE_MILLIS = 60 * SECOND_MILLIS;
-    static final long HOUR_MILLIS = 60 * MINUTE_MILLIS;
-    static final long DAY_MILLIS = 24 * HOUR_MILLIS;
-    static final long MONTH_MILLIS = 30 * DAY_MILLIS;
+    private static final long SECOND_MILLIS = 1000;
+    private static final long MINUTE_MILLIS = 60 * SECOND_MILLIS;
+    private static final long HOUR_MILLIS = 60 * MINUTE_MILLIS;
+    private static final long DAY_MILLIS = 24 * HOUR_MILLIS;
+    private static final long MONTH_MILLIS = 30 * DAY_MILLIS;
     static final long YEAR_MILLIS = 12 * MONTH_MILLIS;
     private static final String PREFIX = "json";
     static InputStream stream;
-    static String USERLAT, USERLONG;
-    static OkHttpClient client = new OkHttpClient();
-    boolean isLoggedIn;
-    LoginCachingAPI lcp;
-    private String response3 = null;
-
+    private static OkHttpClient client = new OkHttpClient();
+    private static LoginCachingAPI lcp;
+    private boolean isLoggedIn;
     public Common(Context mContext) {
         lcp = new LoginCachingAPI(mContext);
+
         try {
-            if (lcp.readSetting("login").equals("true")) this.isLoggedIn = true;
-            else this.isLoggedIn = false;
+            isLoggedIn = lcp.readSetting("login").equals("true");
         } catch (Exception e) {
-            this.isLoggedIn = false;
+            isLoggedIn = false;
         }
 
 
     }
 
+    public static void dialogPeopoleDetails(final String uid, final Context mContextFunction) {
+        final Dialog dialog = new Dialog(mContextFunction);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
+        dialog.setContentView(R.layout.dialog_contact_info);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+        LatLonCachingAPI llc = new LatLonCachingAPI(mContextFunction);
+        ParseSingleChatterJSON prnpj = new ParseSingleChatterJSON(mContextFunction.getString(R.string.uniurl) + "/api/user.php?lat=" + llc.readLat() + "&long=" + llc.readLng() + "&type=SINGLE&user_id_lists=" + uid, mContextFunction);
+        prnpj.fetchJSON();
+        while (prnpj.parsingInComplete) ;
+
+        ((TextView) dialog.findViewById(R.id.name)).setText(prnpj.getuName());
+        ((TextView) dialog.findViewById(R.id.tvActiveNow)).setText(prnpj.getuLastLogin());
+        ImageView image = (ImageView) dialog.findViewById(R.id.image);
+        Glide.with(mContextFunction).load(prnpj.getuImg()).into(image);
+        dialog.findViewById(R.id.bt_send_message).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContextFunction, ProfileActivity.class);
+                intent.putExtra("uid", uid);
+                mContextFunction.startActivity(intent);
+            }
+        });
+        dialog.show();
+        dialog.getWindow().setAttributes(lp);
+    }
+    public static void dialogBuy(final Context mContextFunction) {
+        final Dialog dialog = new Dialog(mContextFunction);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
+        dialog.setContentView(R.layout.paid_popup);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+
+
+        dialog.findViewById(R.id.bt_buy).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+              //// TODO: 8/13/2017 paytm redirect
+                Toast.makeText(mContextFunction,"Payment processing ....",Toast.LENGTH_SHORT).show();
+
+                new AsyncTask<String, String, String>() {
+
+                    String CHECKSUMHASH;
+                    String uid =lcp.readSetting("id");
+                    String userid,MID,email,ORDER_ID,CUST_ID,INDUSTRY_TYPE_ID,CHANNEL_ID,TXN_AMOUNT,WEBSITE,EMAIL,CALLBACK_URL;
+
+                    protected void onPreExecute() {
+                     //   return null;
+                    }
+                    protected String doInBackground(String... params) {
+                        String url = mContextFunction.getString(R.string.uniurl) + "/paytm/generateChecksum.php";
+                        JSONParser jsonParser = new JSONParser(mContextFunction);
+
+                        String orderId;
+                        String custId;
+
+                        String param = "user_id=" + uid;
+
+                        JSONObject jsonObject = jsonParser.makeHttpRequest(url,"POST",param);
+                        Log.e("CheckSum result >>",jsonObject.toString());
+                        if(jsonObject != null){
+                            Log.d("CheckSum result >>",jsonObject.toString());
+                            try {
+
+                                CHECKSUMHASH    = jsonObject.has("CHECKSUMHASH") ? jsonObject.getString("CHECKSUMHASH") : "";
+                                MID = jsonObject.has("CHECKSUMHASH") ? jsonObject.getString("CHECKSUMHASH") : "";
+                                CUST_ID = jsonObject.has("CHECKSUMHASH") ? jsonObject.getString("CHECKSUMHASH") : "";
+                                ORDER_ID = jsonObject.has("CHECKSUMHASH") ? jsonObject.getString("CHECKSUMHASH") : "";
+                                INDUSTRY_TYPE_ID = jsonObject.has("CHECKSUMHASH") ? jsonObject.getString("CHECKSUMHASH") : "";
+                                CHANNEL_ID = jsonObject.has("CHECKSUMHASH") ? jsonObject.getString("CHECKSUMHASH") : "";
+                                TXN_AMOUNT = jsonObject.has("CHECKSUMHASH") ? jsonObject.getString("CHECKSUMHASH") : "";
+                                WEBSITE = jsonObject.has("CHECKSUMHASH") ? jsonObject.getString("CHECKSUMHASH") : "";
+                                EMAIL = jsonObject.has("CHECKSUMHASH") ? jsonObject.getString("CHECKSUMHASH") : "";
+                                CALLBACK_URL = jsonObject.has("CHECKSUMHASH") ? jsonObject.getString("CHECKSUMHASH") : "";
+
+                              Log.e("CheckSum result >>",CHECKSUMHASH);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        return null;
+                    }
+                    protected void onPostExecute(String s) {
+                        super.onPostExecute(s);
+                        PaytmPGService Service = PaytmPGService.getStagingService();
+
+    /*PaytmMerchant constructor takes two parameters
+    1) Checksum generation url
+    2) Checksum verification url
+    Merchant should replace the below values with his values*/
+
+
+
+
+                        //below parameter map is required to construct PaytmOrder object, Merchant should replace below map values with his own values
+
+                        Map<String, String> paramMap = new HashMap<String, String>();
+
+                        //these are mandatory parameters
+
+
+                        paramMap.put("ORDER_ID", ORDER_ID);
+                        //MID provided by paytm
+
+                        paramMap.put("MID", MID);
+                        paramMap.put("CUST_ID", CUST_ID);
+                                paramMap.put("CHANNEL_ID", CHANNEL_ID);
+                        paramMap.put("INDUSTRY_TYPE_ID", INDUSTRY_TYPE_ID);
+                        paramMap.put("WEBSITE", WEBSITE);
+                        paramMap.put("TXN_AMOUNT",TXN_AMOUNT);
+                        paramMap.put("TXN_AMOUNT",TXN_AMOUNT);
+                        paramMap.put("EMAIL", "sumitdas4u@gmail.com");
+                        paramMap.put("MOBILE_NO", "9804735837");
+                        paramMap.put("CALLBACK_URL" ,CALLBACK_URL);
+                        paramMap.put("CHECKSUMHASH" ,CHECKSUMHASH);
+                        PaytmOrder Order = new PaytmOrder(paramMap);
+
+
+
+                        Service.initialize(Order,null);
+                        Service.startPaymentTransaction(mContextFunction, true, true, new PaytmPaymentTransactionCallback() {
+                            @Override
+                            public void someUIErrorOccurred(String inErrorMessage) {
+                                // Some UI Error Occurred in Payment Gateway Activity.
+                                // // This may be due to initialization of views in
+                                // Payment Gateway Activity or may be due to //
+                                // initialization of webview. // Error Message details
+                                // the error occurred.
+                            }
+
+                            @Override
+                            public void onTransactionResponse(Bundle inResponse) {
+                                Log.d("LOG", "Payment Transaction : " + inResponse);
+                                String response=inResponse.getString("RESPMSG");
+                                if (response.equals("Txn Successful."))
+                                {
+                                   // new ConfirmMerchent().execute();
+                                }else
+                                {
+                                    Toast.makeText(mContextFunction,response,Toast.LENGTH_SHORT).show();
+                                }
+                                Toast.makeText(mContextFunction, "Payment Transaction response "+inResponse.toString(), Toast.LENGTH_LONG).show();
+                            }
+
+
+                            @Override
+                            public void networkNotAvailable() {
+                                // If network is not
+                                // available, then this
+                                // method gets called.
+                            }
+
+                            @Override
+                            public void clientAuthenticationFailed(String inErrorMessage) {
+                                // This method gets called if client authentication
+                                // failed. // Failure may be due to following reasons //
+                                // 1. Server error or downtime. // 2. Server unable to
+                                // generate checksum or checksum response is not in
+                                // proper format. // 3. Server failed to authenticate
+                                // that client. That is value of payt_STATUS is 2. //
+                                // Error Message describes the reason for failure.
+                            }
+
+                            @Override
+                            public void onErrorLoadingWebPage(int iniErrorCode,
+                                                              String inErrorMessage, String inFailingUrl) {
+
+                            }
+
+                            // had to be added: NOTE
+                            @Override
+                            public void onBackPressedCancelTransaction() {
+                                // TODO Auto-generated method stub
+                            }
+
+                            @Override
+                            public void onTransactionCancel(String inErrorMessage, Bundle inResponse) {
+                                Log.d("LOG", "Payment Transaction Failed " + inErrorMessage);
+                                Toast.makeText(mContextFunction, "Payment Transaction Failed ", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                }.execute();
+
+
+
+
+
+
+            }
+        });
+        dialog.show();
+        dialog.getWindow().setAttributes(lp);
+    }
+
+
+    public static class JSONParser {
+        static InputStream is = null;
+        static JSONObject jObj = null;
+        static String json = "";
+
+        HttpURLConnection urlConnection = null;
+        // variable to hold context
+        private Context context;
+        // constructor
+        public JSONParser(Context context){
+            this.context=context;
+        }
+
+
+        public JSONObject makeHttpRequest(String url,String method,String params) {
+
+            // boolean isReachable =Config.isURLReachable(context);
+            // Making HTTP request
+            try {
+                String retSrc="";
+                char current = '0';
+
+                URL url1 = new URL(url);
+                // check for request method
+                HttpURLConnection urlConnection = (HttpURLConnection) url1.openConnection();
+                if (method == "POST") {
+                    // request method is POST
+                    urlConnection.setDoOutput(true);
+                    urlConnection.setRequestMethod("POST");
+                    urlConnection.setFixedLengthStreamingMode(params.getBytes().length);
+                    urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                    PrintWriter out = new PrintWriter(urlConnection.getOutputStream());
+                    out.print(params);
+                    out.close();
+                }
+                InputStream in = urlConnection.getInputStream();
+
+                InputStreamReader isw = new InputStreamReader(in);
+
+                byte[] bytes = new byte[10000];
+                StringBuilder x = new StringBuilder();
+                int numRead = 0;
+                while ((numRead = in.read(bytes)) >= 0) {
+                    x.append(new String(bytes, 0, numRead));
+                }
+                retSrc=x.toString();
+
+
+
+                jObj = new JSONObject(retSrc);
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(context, "Connectivity issue. Please try again later.", Toast.LENGTH_LONG).show();
+                    }
+                });
+                return null;
+            }finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+            }
+            return jObj;
+        }
+    }
     public static String HttpURLConnection(String URLSTRING) throws IOException {
 
 

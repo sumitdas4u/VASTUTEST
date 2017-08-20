@@ -32,7 +32,7 @@ import java.util.Locale;
 
 public class ChatListActivity extends AppCompatActivity {
 
-    public static final String USERS_CHILD = "messages";
+    public static final String      USERS_CHILD = "messages";
     SettingsAPI set;
     LoginCachingAPI lcp;
     LatLonCachingAPI llc;
@@ -96,7 +96,7 @@ public class ChatListActivity extends AppCompatActivity {
             cAdapter = new ChatterAdapter(this, uIdFinal, uNameFinal, uImgFinal, uLastMsgFinal, uUnreadFinal);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
             lv.setLayoutManager(mLayoutManager);
-            lv.setItemAnimator(new DefaultItemAnimator());
+           // lv.setItemAnimator(new DefaultItemAnimator());
             lv.setAdapter(cAdapter);
 //            lv.removeAllViews();
 //            lv.invalidate();
@@ -139,8 +139,8 @@ public class ChatListActivity extends AppCompatActivity {
                                 if (str.split("=")[0].trim().equals("timestamp")) {
                                     if (Long.valueOf(str.split("=")[1].trim()) > lastTime) {
                                         lastTime = Long.valueOf(str.split("=")[1].trim());
-                                        SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy ',' h:mm a", new Locale("en", "IN"));
-                                        lastDateTime = sdf.format(lastTime);
+                                        //SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy ',' h:mm a", new Locale("en", "IN"));
+                                        lastDateTime = Common.getTimeAgo(lastTime.toString());
                                     }
                                 }
                                 if (str.split("=")[0].trim().equals("uid")) {
@@ -161,8 +161,8 @@ public class ChatListActivity extends AppCompatActivity {
                                 if (str.split("=")[0].trim().equals("timestamp")) {
                                     if (Long.valueOf(str.split("=")[1].trim()) > lastTime) {
                                         lastTime = Long.valueOf(str.split("=")[1].trim());
-                                        SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy ',' h:mm a", new Locale("en", "IN"));
-                                        lastDateTime = sdf.format(lastTime);
+                                        //SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy ',' h:mm a", new Locale("en", "IN"));
+                                        lastDateTime = Common.getTimeAgo(lastTime.toString());
                                     }
                                 }
                                 if (str.split("=")[0].trim().equals("uid")) {

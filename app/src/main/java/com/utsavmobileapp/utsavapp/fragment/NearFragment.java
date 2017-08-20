@@ -139,36 +139,10 @@ public class NearFragment extends Fragment {
 //            }
 //        });
 
-        vabu = (Button) view.findViewById(R.id.viewallBtnUsers);
-        vabu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(mContext, "coming soon !", Toast.LENGTH_LONG).show();
-            }
-        });
 
 
-        if (isMyServiceRunning(BackgroundLocationService.class)) {
 
-            toggleButtonLocationService.setChecked(true);
-        } else {
-            toggleButtonLocationService.setChecked(false);
-        }
-        this.toggleButtonLocationService.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked) {
-                if (isChecked) {
-                    Intent intent = new Intent(mContext, BackgroundLocationService.class);
-                    getActivity().startService(intent);
-                    //Log.e("important", "service stoped ");
-                } else {
-                    Intent intent = new Intent(mContext, BackgroundLocationService.class);
-                    getActivity().stopService(intent);
-                    //Log.e("important", "service started ");
-                }
 
-            }
-        });
         Button allNearFestival = (Button) view.findViewById(R.id.viewallBtnNear);
         allNearFestival.setOnClickListener(new View.OnClickListener() {
             @Override

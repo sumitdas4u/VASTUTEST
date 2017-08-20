@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- START xml_defaults -->
+<defaultsMap>
+    <entry>
+        <key>Festival_Display_Adds</key>
+        <value>Fetching config…</value>
+    </entry>true
+    <entry>
+        <key>no_of_chat_free</key>
+        <value>4</value>
+    </entry>
+    <entry>
+        <key>random_no_festival</key>
+        <value>3</value>
+    </entry>
+
+</defaultsMap>
+    <!-- END xml_defaults -->

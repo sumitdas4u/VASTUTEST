@@ -225,10 +225,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     //That's google sign in
 
     private void handleSignInResult(GoogleSignInResult result) {
-        //Log.e("important", "result is " + result.getStatus());
+        Log.e("important", "result is " + result.getStatus());
         if (result.isSuccess()) {
             GoogleSignInAccount acct = result.getSignInAccount();
-            //Log.e("important", "you are logged in with " + acct.getPhotoUrl());
+            Log.e("important", "you are logged in with " + acct.getPhotoUrl());
             user_google_id = acct.getId();
             user_full_name = acct.getDisplayName();
             user_email = acct.getEmail();
@@ -298,7 +298,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 conn.connect();
                 //Log.e("important",getPostData());
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-//               Log.e("important", getPostData());
+                 Log.e("important", getPostData());
                 writer.write(getPostData());
                 writer.flush();
                 writer.close();

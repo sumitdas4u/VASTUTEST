@@ -89,35 +89,7 @@ public class MapsFestivalActivity extends FragmentActivity implements OnMapReady
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        final ToggleButton btnBlock = (ToggleButton) findViewById(R.id.btnBlock);
-        if (lcp.readSetting("map_block").equals("null")) {
-            btnBlock.setChecked(false);
-        } else {
-            btnBlock.setChecked(true);
-        }
-        btnBlock.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (btnBlock.isChecked()) {
-                    lcp.addUpdateSettings("map_block", "true");
 
-                    try {
-                        kmlLayer.removeLayerFromMap();
-                    } catch (NullPointerException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    lcp.addUpdateSettings("map_block", "null");
-                    try {
-                        kmlLayer.addLayerToMap();
-                    } catch (IOException | XmlPullParserException | NullPointerException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-
-            }
-        });
 
         // requestButton = (RideRequestButton) findViewById(R.id.mapUbr);
 

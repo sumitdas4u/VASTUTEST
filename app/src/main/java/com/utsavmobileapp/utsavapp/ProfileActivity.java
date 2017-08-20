@@ -27,6 +27,7 @@ import com.utsavmobileapp.utsavapp.fetch.FetchCheckin;
 import com.utsavmobileapp.utsavapp.fragment.StoryFragment;
 import com.utsavmobileapp.utsavapp.fragment.StorySlideshowFragment;
 import com.utsavmobileapp.utsavapp.parser.ParseSingleChatterJSON;
+import com.utsavmobileapp.utsavapp.service.Common;
 import com.utsavmobileapp.utsavapp.service.LatLonCachingAPI;
 
 import java.util.ArrayList;
@@ -80,7 +81,7 @@ public class ProfileActivity extends AppCompatActivity implements StoryFragment.
             }
         });
 
-        ParseSingleChatterJSON prnpj = new ParseSingleChatterJSON(this.getString(R.string.uniurl) + "/api/user.php?lat=" + llc.readLat() + "&long=" + llc.readLng() + "&type=SINGLE&user_id_lists=" + uId, this);
+        final ParseSingleChatterJSON prnpj = new ParseSingleChatterJSON(this.getString(R.string.uniurl) + "/api/user.php?lat=" + llc.readLat() + "&long=" + llc.readLng() + "&type=SINGLE&user_id_lists=" + uId, this);
         prnpj.fetchJSON();
         while (prnpj.parsingInComplete) ;
         nameView.setText(prnpj.getuName());
@@ -90,10 +91,16 @@ public class ProfileActivity extends AppCompatActivity implements StoryFragment.
         checkin.setText(prnpj.getuTotalChckIn());
         Glide.with(this).load(prnpj.getuImg()).into(dpView);
 
-        if(prnpj.getuTotalPhoto().equals("0"))
-            photoHead.setVisibility(View.GONE);
-        if(prnpj.getuTotalChckIn().equals("0"))
-            checkinHead.setVisibility(View.GONE);
+try{
+    if(prnpj.getuTotalPhoto().equals("0"))
+        photoHead.setVisibility(View.GONE);
+    if(prnpj.getuTotalChckIn().equals("0"))
+        checkinHead.setVisibility(View.GONE);
+
+
+}catch (Exception ignored){
+
+}
 
         final StoryFragment stf = new StoryFragment();
         Bundle bundle = new Bundle();
@@ -106,7 +113,9 @@ public class ProfileActivity extends AppCompatActivity implements StoryFragment.
             @Override
             public void onClick(View view) {
                 Intent chatent = new Intent(ProfileActivity.this, ChatActivity.class);
-                chatent.putExtra("grlfrnd", uId);
+                chatent.putExtra("chatMessageUserId", uId);
+                chatent.putExtra("chatMessageUserName", prnpj.getuName());
+                chatent.putExtra("chatMessageSubTitle", prnpj.getuStatus());
                 startActivity(chatent);
             }
         });

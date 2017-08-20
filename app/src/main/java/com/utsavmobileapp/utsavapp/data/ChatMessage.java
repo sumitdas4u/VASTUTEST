@@ -6,6 +6,15 @@ package com.utsavmobileapp.utsavapp.data;
 
 public class ChatMessage {
 
+    public boolean isUnread() {
+        return unread;
+    }
+
+    public void setUnread(boolean unread) {
+        this.unread = unread;
+    }
+
+    private  boolean unread;
     private String id;
     private String text;
     private String name;
@@ -20,7 +29,8 @@ public class ChatMessage {
         this.text = text;
         this.name = name;
         this.photoUrl = photoUrl;
-        this.timestamp=String.valueOf(System.currentTimeMillis());
+        this.timestamp=String.valueOf(System.currentTimeMillis() / 1000L);
+        this.unread=true;
         this.uid=uid;
     }
 

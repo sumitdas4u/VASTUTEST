@@ -153,7 +153,7 @@ public class ParseSingleChatterJSON {
                     uTotalPhoto=jsonObject.optString("user_total_photos");
                     uTotalRvw=jsonObject.optString("user_total_review");
                     uTotalChckIn=jsonObject.optString("user_total_check_in");
-                    uLastLogin=new SimpleDateFormat("MMMM d, yyyy ',' h:mm a", new Locale("en", "IN")).format(Long.parseLong(jsonObject.optString("user_last_update"))*1000);
+                    uLastLogin="Last seen "+Common.getTimeAgo(jsonObject.optString("user_last_update"));
                     String photoStr = jsonObject.optString("photos");
                     if (!photoStr.equals("null")) {
                         JSONArray jsonImgArray = jsonObject.getJSONArray("photos");

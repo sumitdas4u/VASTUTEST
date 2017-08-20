@@ -126,9 +126,12 @@ public class FestivalDetailsInfoFragment extends Fragment {
         showAllReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final StoryFragment stf = new StoryFragment();
+                String fid=dtact.getfId();
+                if (fid == null) return;
                 Bundle bundle = new Bundle();
-                bundle.putString("fid", dtact.getfId());
+                bundle.putString("fid", fid);
+                final StoryFragment stf = new StoryFragment();
+
                 stf.setArguments(bundle);
                 getFragmentManager().beginTransaction().replace(R.id.detailsContainer, stf, "Story").commitAllowingStateLoss();
             }

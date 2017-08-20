@@ -92,7 +92,13 @@ public class StoryFragment extends Fragment implements AsyncResponseStoryBoard {
             } else {
                 for (int i = 0; i < output.size(); i++) {
                     stories.add(output.get(i));
-                    ShowStories();
+                    try{
+                        ShowStories();
+                    }
+                    catch (Exception ignored){
+
+                    }
+
                 }
             }
         }

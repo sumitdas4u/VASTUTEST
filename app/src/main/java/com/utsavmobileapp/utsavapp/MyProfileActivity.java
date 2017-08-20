@@ -15,11 +15,15 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -36,6 +40,7 @@ import com.facebook.FacebookRequestError;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
+import com.utsavmobileapp.utsavapp.adapter.ChatterAdapter;
 import com.utsavmobileapp.utsavapp.parser.ParseSingleChatterJSON;
 import com.utsavmobileapp.utsavapp.service.Common;
 import com.utsavmobileapp.utsavapp.service.LatLonCachingAPI;
@@ -75,12 +80,12 @@ public class MyProfileActivity extends AppCompatActivity {
 
     private static final String USER_AGENT = "UploadServiceDemo/" + BuildConfig.VERSION_NAME;
 
-    ImageView editDob, editStatus;
+    ImageView editDob, editStatus,editDp;
     EditText statusText;
     TextView dobLabel, statusLabel, subscriptionLbl;
     TextView myName, myPhoto, myReview, myCheckin;
     String status, dob;
-    CircleImageView editDp;
+
     Button buy;
 
     ArrayList<String> paths;
@@ -96,6 +101,9 @@ public class MyProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile);
+        lcp = new LoginCachingAPI(this);
+
+
         dp = (ImageView) findViewById(R.id.dpView);
         common = new Common(this);
         lcp = new LoginCachingAPI(this);
@@ -103,7 +111,7 @@ public class MyProfileActivity extends AppCompatActivity {
 
         editDob = (ImageView) findViewById(R.id.edit_dob);
         editStatus = (ImageView) findViewById(R.id.edit_status);
-        editDp = (CircleImageView) findViewById(R.id.dpChange);
+        editDp = (ImageView) findViewById(R.id.dpChange);
 
         statusText = (EditText) findViewById(R.id.status_text);
 
@@ -166,7 +174,18 @@ public class MyProfileActivity extends AppCompatActivity {
 
         showInfo();
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!lcp.readSetting("login").equals("true")) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.putExtra("mode", "login");
+            intent.putExtra("method", "force");
+            startActivity(intent);
+            return;
 
+        }
+    }
     @Override
     @Deprecated
     protected Dialog onCreateDialog(int id) {
@@ -205,6 +224,13 @@ public class MyProfileActivity extends AppCompatActivity {
         statusLabel.setText(status);
         dob = prnpj.getuDob();
         dobLabel.setText(dob);
+        ImageButton back = (ImageButton) findViewById(R.id.goBack);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         if (lcp.readSetting("subscription").equals("false")) {
             subscriptionLbl.setText("Free member");
             buy.setOnClickListener(new View.OnClickListener() {
@@ -225,6 +251,34 @@ public class MyProfileActivity extends AppCompatActivity {
         myCheckin.setText(prnpj.getuTotalChckIn());
         lcp.addUpdateSettings("photo", prnpj.getuImg());
         common.ImageDownloaderTask(dp, this, lcp.readSetting("photo"), "user");
+    }
+    public void actionClick(View v) {
+        Intent myIntent = new Intent(this, SettingsActivity.class);
+        //Optional parameters
+
+        if(v.getId() == R.id.about_us){
+            myIntent.putExtra("url",getString(R.string.uniurl) + "/about.html" );
+            myIntent.putExtra("title", "About Us" );
+        }else if(v.getId() == R.id.refund){
+            myIntent.putExtra("url",getString(R.string.uniurl) + "/refund.html" );
+            myIntent.putExtra("title", "Refund & Cancellation" );
+        }else if(v.getId() == R.id.contact){
+            myIntent.putExtra("url",getString(R.string.uniurl) + "/contact.html" );
+            myIntent.putExtra("title", "Contact Us" );
+        }else if(v.getId() == R.id.terms){
+            myIntent.putExtra("url",getString(R.string.uniurl) + "/terms.html" );
+            myIntent.putExtra("title", "Terms & Conditions" );
+        }
+        else if(v.getId() == R.id.privacy){
+            myIntent.putExtra("url",getString(R.string.uniurl) + "/privacy.html" );
+            myIntent.putExtra("title", "Privacy & Terms" );
+        }
+        else {
+
+            myIntent.putExtra("url",getString(R.string.uniurl)  );
+            myIntent.putExtra("title", "Home" );
+        }
+        this.startActivity(myIntent);
     }
 
     private void openPicPicker() {

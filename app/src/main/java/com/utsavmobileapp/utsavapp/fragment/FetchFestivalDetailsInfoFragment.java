@@ -115,11 +115,8 @@ public class FetchFestivalDetailsInfoFragment extends AsyncTask<Void, Void, Void
                     .setDropoffLocation(Double.parseDouble(dtact.getFlat()), Double.parseDouble(dtact.getFlon()), null, null)
                     .build();
 
-
             RideRequestButton requestButton = (RideRequestButton) festivalInfoContainerLayout.findViewById(R.id.uberBtn);
             requestButton.setRideParameters(rideParams);
-
-
             requestButton.loadRideInformation();
         } catch (NullPointerException ignored) {
         }

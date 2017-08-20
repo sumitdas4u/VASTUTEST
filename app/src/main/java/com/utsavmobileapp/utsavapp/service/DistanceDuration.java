@@ -131,8 +131,8 @@ public class DistanceDuration {
                     polyLineOptions.color(Color.BLUE);
                 }
 
+try{line = mMap.addPolyline(polyLineOptions);}catch(Exception e){line=null;}
 
-                line = mMap.addPolyline(polyLineOptions);
 
             }
         }

@@ -130,7 +130,7 @@ public class ParseMultipleChatterJSON {
 //                    Log.e("important", urlString);
                     String sb = Common.HttpURLConnection(urlString);
                     //saveData(sb);
-//                    Log.e("important", "found string " +sb.toString());
+                    Log.e("important", "found string " +sb.toString());
                     parseJSONAndStoreIt(sb);
                     // stream.close();
                 } catch (Exception e) {

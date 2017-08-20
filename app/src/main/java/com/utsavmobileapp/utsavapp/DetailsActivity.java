@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
@@ -25,9 +26,13 @@ import com.andreabaccega.googlshortenerlib.GooglShortenerResult;
 import com.andreabaccega.googlshortenerlib.GoogleShortenerPerformer;
 import com.cocosw.bottomsheet.BottomSheet;
 import com.dd.CircularProgressButton;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.appindexing.Action;
 import com.google.firebase.appindexing.FirebaseUserActions;
 import com.google.firebase.appindexing.builders.Actions;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.squareup.okhttp.OkHttpClient;
 import com.utsavmobileapp.utsavapp.adapter.detailsActivityImageAdapter;
 import com.utsavmobileapp.utsavapp.fragment.FestivalDetailsInfoFragment;
@@ -90,6 +95,7 @@ public class DetailsActivity extends AppCompatActivity implements FestivalDetail
     FetchDetails FetchDetails;
     private ParseFestivalDetailsJSON festivalObject;
     private String longUrl = null;
+    private FirebaseRemoteConfig mFirebaseRemoteConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,30 +109,23 @@ public class DetailsActivity extends AppCompatActivity implements FestivalDetail
 
         lca=new LoginCachingAPI(this);
 
+
+
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
+                .setDeveloperModeEnabled(BuildConfig.DEBUG)
+                .build();
+        FirebaseRemoteConfig.getInstance().setConfigSettings(configSettings);
+        FirebaseRemoteConfig.getInstance().setDefaults(R.xml.remote_config_defaults);
+        fetchWelcome();
+
         Random rand = new Random();
-        if((rand.nextInt(3) + 1)==2)
+        int i1 = rand.nextInt(9 - 1) + 1;
+        if((i1%Integer.parseInt(mFirebaseRemoteConfig.getString("random_no_festival")))==0 && mFirebaseRemoteConfig.getBoolean("Festival_Display_Adds"))
         {
             if (lca.readSetting("login").equals("true")) {
                 if (lca.readSetting("subscription").equals("false")) {
-                    AlertDialog alertDialog = new AlertDialog.Builder(DetailsActivity.this).create();
-                    alertDialog.setTitle("Paysa de");
-                    alertDialog.setCancelable(false);
-                    alertDialog.setMessage("Give me money and I will give you freedom");
-                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Buy",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-//                                        Intent i = new Intent(MyProfileActivity.this, SomeClass.class);
-//                                        i.putExtra("key", "value");
-//                                        startActivity(i);
-                                }
-                            });
-                    alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Poysa nei",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    DetailsActivity.this.finish();
-                                }
-                            });
-                    alertDialog.show();
+                    Common.dialogBuy(DetailsActivity.this);
 
                 }
             }
@@ -306,7 +305,35 @@ public class DetailsActivity extends AppCompatActivity implements FestivalDetail
         intent2.putExtra("image", fImg);
         startActivity(intent2);
     }
+    private void fetchWelcome() {
 
+        long cacheExpiration = 3600; // 1 hour in seconds.
+        // If your app is using developer mode, cacheExpiration is set to 0, so each fetch will
+        // retrieve values from the service.
+        if (mFirebaseRemoteConfig.getInfo().getConfigSettings().isDeveloperModeEnabled()) {
+            cacheExpiration = 0;
+        }
+
+        // [START fetch_config_with_callback]
+        // cacheExpirationSeconds is set to cacheExpiration here, indicating the next fetch request
+        // will use fetch data from the Remote Config service, rather than cached parameter values,
+        // if cached parameter values are more than cacheExpiration seconds old.
+        // See Best Practices in the README for more information.
+        mFirebaseRemoteConfig.fetch(cacheExpiration)
+                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+
+
+                            // After config data is successfully fetched, it must be activated before newly fetched
+                            // values are returned.
+                            mFirebaseRemoteConfig.activateFetched();
+                        }
+                    }
+                });
+        // [END fetch_config_with_callback]
+    }
     private void doCheckIn() {
         if (common.isLoggedIn(DetailsActivity.this)) {
             new Thread(new Runnable() {

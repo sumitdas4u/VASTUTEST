@@ -3,6 +3,7 @@ package com.utsavmobileapp.utsavapp.adapter;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -22,6 +24,7 @@ import com.utsavmobileapp.utsavapp.ProfileActivity;
 import com.utsavmobileapp.utsavapp.R;
 import com.utsavmobileapp.utsavapp.parser.ParseSingleChatterJSON;
 import com.utsavmobileapp.utsavapp.service.ChatCachingAPI;
+import com.utsavmobileapp.utsavapp.service.Common;
 import com.utsavmobileapp.utsavapp.service.LatLonCachingAPI;
 
 import java.util.List;
@@ -61,9 +64,9 @@ public class ChatterAdapter extends RecyclerView.Adapter<ChatterAdapter.ChatView
         holder.name.setText(userName.get(position));
         holder.last.setText(lastMsg.get(position));
         if (Integer.parseInt(unread.get(position)) > 0)
-            holder.notRead.setVisibility(View.VISIBLE);
+            holder.name.setTypeface(null, Typeface.BOLD);
         else
-            holder.notRead.setVisibility(View.GONE);
+            holder.name.setTypeface(null, Typeface.NORMAL);
         if (userPhoto.get(position) == null) {
             holder.thumb.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.com_facebook_profile_picture_blank_square));
         } else {
@@ -73,7 +76,7 @@ public class ChatterAdapter extends RecyclerView.Adapter<ChatterAdapter.ChatView
         holder.thumb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialogPeopoleDetails(userId.get(position));
+                Common.dialogPeopoleDetails(userId.get(position),mContext);
             }
         });
 
@@ -86,9 +89,10 @@ public class ChatterAdapter extends RecyclerView.Adapter<ChatterAdapter.ChatView
                 cca.addUpdateCount(userId.get(position), nowSave.toString());
 
                 Intent chatent = new Intent(mContext, ChatActivity.class);
-                chatent.putExtra("grlfrnd", userId.get(position));
-                chatent.putExtra("gfname", userName.get(position));
-                chatent.putExtra("last", lastMsg.get(position));
+                chatent.putExtra("chatMessageUserId", userId.get(position));
+                chatent.putExtra("chatMessageUserName", userName.get(position));
+                chatent.putExtra("chatMessageSubTitle", lastMsg.get(position));
+
                 mContext.startActivity(chatent);
             }
         });
@@ -105,7 +109,7 @@ public class ChatterAdapter extends RecyclerView.Adapter<ChatterAdapter.ChatView
     public class ChatViewHolder extends RecyclerView.ViewHolder {
         public TextView name;
         public TextView last;
-        public LinearLayout notRead;
+       // public RelativeLayout notRead;
         ImageView thumb;
         LinearLayout total;
 
@@ -114,39 +118,10 @@ public class ChatterAdapter extends RecyclerView.Adapter<ChatterAdapter.ChatView
             total = (LinearLayout) itemView.findViewById(R.id.chatter_list_item);
             name = (TextView) itemView.findViewById(R.id.user_name);
             last = (TextView) itemView.findViewById(R.id.extra_info);
-            notRead = (LinearLayout) itemView.findViewById(R.id.unread);
+            //notRead = (RelativeLayout) itemView.findViewById(R.id.unread);
             thumb = (ImageView) itemView.findViewById(R.id.user_photo);
         }
     }
 
-    private void dialogPeopoleDetails(final String uid) {
-        final Dialog dialog = new Dialog(mContext);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
-        dialog.setContentView(R.layout.dialog_contact_info);
 
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(dialog.getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-
-        LatLonCachingAPI llc = new LatLonCachingAPI(mContext);
-        ParseSingleChatterJSON prnpj = new ParseSingleChatterJSON(mContext.getString(R.string.uniurl) + "/api/user.php?lat=" + llc.readLat() + "&long=" + llc.readLng() + "&type=SINGLE&user_id_lists=" + uid, mContext);
-        prnpj.fetchJSON();
-        while (prnpj.parsingInComplete) ;
-
-        ((TextView) dialog.findViewById(R.id.name)).setText(prnpj.getuName());
-        ((TextView) dialog.findViewById(R.id.tvActiveNow)).setText(prnpj.getuLastLogin());
-        ImageView image = (ImageView) dialog.findViewById(R.id.image);
-        Glide.with(mContext).load(prnpj.getuImg()).into(image);
-        ((Button) dialog.findViewById(R.id.bt_send_message)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mContext, ProfileActivity.class);
-                intent.putExtra("uid", uid);
-                mContext.startActivity(intent);
-            }
-        });
-        dialog.show();
-        dialog.getWindow().setAttributes(lp);
-    }
 }

@@ -6,7 +6,6 @@
     tools:context="com.utsavmobileapp.utsavapp.fragment.NearFragment">
 
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -69,14 +68,15 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:indeterminate="true" />
+
                     <LinearLayout
+                        android:id="@+id/mapll"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@android:color/background_light"
-                        android:orientation="vertical"
-                        android:id="@+id/mapll"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="5dp"
+                        android:background="@android:color/background_light"
+                        android:orientation="vertical"
                         android:visibility="invisible">
 
                         <RelativeLayout
@@ -88,7 +88,7 @@
                                 android:id="@+id/imageMap"
                                 android:layout_width="fill_parent"
                                 android:layout_height="fill_parent"
-                                android:scaleType="centerCrop"/>
+                                android:scaleType="centerCrop" />
 
                         </RelativeLayout>
 
@@ -165,49 +165,50 @@
             </HorizontalScrollView>
 
             Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Lost OR Found"
-                android:textColor="@color/uber_black"
-                android:id="@+id/btnLost"
-                android:background="@drawable/button_line_"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lost OR Found"
+            android:textColor="@color/uber_black"
+            android:id="@+id/btnLost"
+            android:background="@drawable/button_line_"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_gravity="center"
+                android:orientation="horizontal"
                 android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="Do you want near by festivals alerts ?"
                     android:textColor="@android:color/holo_green_dark"
-                    android:textSize="14sp"
-                    android:layout_gravity="center" />
+                    android:textSize="14sp" />
 
                 <ToggleButton
-                    style="?android:attr/borderlessButtonStyle"
                     android:id="@+id/toggleButtonLocationService"
+                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
+                    android:layout_gravity="left|right"
+                    android:layout_marginLeft="10dp"
                     android:background="@drawable/toggle_button_grey_red"
+                    android:checked="false"
+
                     android:textColor="@color/H1TextColor"
                     android:textOff="Active"
                     android:textOn="Deactive"
-
-                    android:textSize="11sp"
-                    android:layout_gravity="left|right"
-                    android:layout_marginLeft="10dp"
-                    android:checked="false" />
+                    android:textSize="11sp" />
             </LinearLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -225,19 +226,6 @@
                     android:textColor="@android:color/secondary_text_light"
                     android:textSize="14sp" />
 
-                <Button
-                    android:id="@+id/viewallBtnUsers"
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@android:color/transparent"
-                    android:text="View All"
-                    android:textColor="@color/H1TextColor"
-                    android:textSize="12sp" />
             </RelativeLayout>
 
             <HorizontalScrollView
@@ -274,7 +262,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:background="@color/background_material_light"
-                android:padding="10dp" >
+                android:padding="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -286,16 +274,16 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/zomato5"
-                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/zomato5" />
 
             </RelativeLayout>
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="#fff"
                 android:scrollbars="none">
@@ -306,7 +294,7 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:orientation="horizontal"
-                    android:paddingBottom="10dp">
+                    android:paddingBottom="70dp">
 
                     <!--<include layout="@layout/festival_block"/>-->
 

@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <com.balysv.materialripple.MaterialRippleLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?android:attr/activatedBackgroundIndicator">
 
     <LinearLayout
         android:id="@+id/chatter_list_item"
-        android:background="@color/cpb_white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/cpb_white"
         android:clickable="true"
         android:gravity="center_vertical"
         android:minHeight="70dp"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:weightSum="1">
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/user_photo"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:id="@+id/user_photo"
-            android:src="@drawable/com_facebook_profile_picture_blank_square"/>
+            android:src="@drawable/com_facebook_profile_picture_blank_square" />
 
 
         <LinearLayout
@@ -28,42 +32,36 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
-            android:layout_marginRight="10dp"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/user_name"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Sample"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                     android:textColor="#424242"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:id="@+id/unread"
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/colorAccent" />
+                <TextView
+                    android:id="@+id/extra_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="Sample Text"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@color/material_grey_600" />
+
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/extra_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:text="Sample Text"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/material_grey_600" />
 
         </LinearLayout>
 
